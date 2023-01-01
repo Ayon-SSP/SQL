@@ -1,6 +1,6 @@
 /*
-Working Platform:- MySQL
+Enter your query here.
 */
-SET @TEMP:=21; 
-SELECT REPEAT('* ', @TEMP:= @TEMP - 1) 
-FROM INFORMATION_SCHEMA.TABLES;
+set @TEMP:=21;
+select REPEAT('* ', @TEMP:= @TEMP - 1) 
+from INFORMATION_SCHEMA.TABLES;

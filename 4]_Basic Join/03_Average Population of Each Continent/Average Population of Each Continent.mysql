@@ -1,8 +1,5 @@
-/*
-Working Platform:- MySQL, Oracle, MS SQL Server
-*/
-SELECT COUNTRY.CONTINENT, FLOOR(AVG(CITY.POPULATION))
-FROM CITY
-INNER JOIN COUNTRY 
-ON CITY.COUNTRYCODE = COUNTRY.CODE
-GROUP BY COUNTRY.CONTINENT;
+select country.continent, floor(avg(city.population))
+from city
+inner join country 
+on city.countrycode = country.code
+group by country.continent;

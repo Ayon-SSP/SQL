@@ -1,10 +1,7 @@
-/*
-Working platform:- MySQL
-*/
-SELECT CONCAT(NAME,'(',SUBSTR(OCCUPATION,1,1),')') AS N
-FROM OCCUPATIONS
-ORDER BY N;
-SELECT CONCAT('There are a total of ',COUNT(OCCUPATION),' ',LOWER(OCCUPATION),'s.')
-FROM OCCUPATIONS
-GROUP BY OCCUPATION
-ORDER BY COUNT(OCCUPATION), OCCUPATION;
+select concat(NAME,'(',substr(OCCUPATION,1,1),')') as N
+from OCCUPATIONS
+order by N;
+select concat('There are a total of ',count(OCCUPATION),' ',lower(OCCUPATION),'s.')
+from OCCUPATIONS
+group by OCCUPATION
+order by count(OCCUPATION), OCCUPATION;

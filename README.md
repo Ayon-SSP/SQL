@@ -1,5 +1,5 @@
 # HackerRank-SQL
-All 🧢 My HackerRank SQL 🗃️ Solutions.
+All 🧢 My LeetCode & HackerRank SQL 🗃️ Solutions.
 
 ![LeetCodeSql](Res/LeetCodeSql.jpg)
 

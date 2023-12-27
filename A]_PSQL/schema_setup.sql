@@ -15,13 +15,6 @@ select * from employee;
 
 
 
-
-
-
-
-
-
-
 -- schema
 create table products (
 	prodID serial primary key,
@@ -95,21 +88,3 @@ where prodID = 1;
 update orders
 set product_revue = 5, product_name = 'laptop'
 where prodID = 1;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

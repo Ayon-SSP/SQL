@@ -1,3 +1,20 @@
+# 🛢️ Postgresql
+
+## 📚 Resources
+<!-- do some points with resources links and docs -->
+- [Pepcoding-sql](https://www.youtube.com/playlist?list=PL-Jc9J83PIiFRR58Ezyy2z3gYhPA0lKmt)
+- [Postgresql Docs](https://www.postgresql.org/docs/)
+- [Postgresql Tutorial](https://www.postgresqltutorial.com/)
+- [Postgresql Tutorial](https://www.postgresqltutorial.com/postgresql-cheat-sheet/)
+
+<!-- add a used code link -->
+## 👷‍♂️ Code used in my projects
+📁 Repo: [Store-Monitoring `run.sql`](https://github.com/Ayon-SSP/Store-Monitoring/blob/master/src/run.sql)
+
+
+
+## 📝 Notes
+
 ```bash
 user, password = ayonssp, zboy@1x1
 psql jwt_auth_system ayonssp

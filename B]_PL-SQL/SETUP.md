@@ -141,3 +141,60 @@ Go to the Oracle website and download the Oracle Database Express Edition for Li
   ```bash
   exit
   ```
+
+<!-- Oracle Database software installation process for windows -->
+# Install Oracle Database software on Windows
+1. Download Oracle Database software
+1. Go to the [Oracle Database download page](https://www.oracle.com/database/technologies/oracle-database-software-downloads.html) and download the Oracle Database 21c Express Edition for Windows.
+   - ![image](https://github.com/Ayon-SSP/Ayon-SSP/assets/80549753/feb718a3-66bd-4994-9592-e3c494e50554)
+2. Extract the downloaded file to a folder of your choice.
+3. Go to the database folder and run the setup.exe file.
+   - **Path:** Extracted file `OracleXE213_Win64`
+   - ![image](https://github.com/Ayon-SSP/Ayon-SSP/assets/80549753/1805f3cd-5c0e-4435-8837-c6a3adc753b3)
+4. The Oracle Database Installer will start. Click on the "Set Up Software Only" option and click Next.
+   - ![image](https://github.com/Ayon-SSP/Ayon-SSP/assets/80549753/5a8d401b-46ac-4221-9ac7-be9dda05d1f2)
+   - > This Installation will take some time. So, be patient.
+5. Select the "Single Instance Database Installation" option and click Next.
+6. [Getting Started](https://www.oracle.com/database/technologies/appdev/xe/quickstart.html)
+---
+
+### 🎗️ My References
+> My Reminders for setting up PL/SQL on Linux Ubuntu/WSL
+>
+
+### Oracle Database software:
+```bash
+name: system
+password: 321654
+```
+- *Info to save:*
+  ```bash
+  Multitenant container database: localhost:1521
+  Pluggable database: localhost:1521/XEPDB1
+  EM Express: https://localhost:5500/em
+  ```
+![image](https://github.com/Ayon-SSP/Ayon-SSP/assets/80549753/8896acd3-b980-40aa-b05e-7f4612383941)
+<!-- save this link https://localhost:5500/em/shell as Database Home for future opens-->
+> #### Oracle Enterprise Manager Database Express: [Database Home](https://localhost:5500/em/shell)
+
+### Oracle SQL Developer:
+```bash
+cd C:\Users\admin\Downloads\PLSQL\sqldeveloper-23.1.1.345.2114-x64\sqldeveloper
+.\sqldeveloper.exe
+
+```
+![image](https://github.com/Ayon-SSP/Ayon-SSP/assets/80549753/a783eb83-dd2f-43d0-b2ad-042f875e16a6)
+
+<!-- ```bash
+Name: PlayGroundSQL
+Role: SYSDBA
+username: ayonssp
+password: playing@plsql
+host: localhost
+port: 1521
+sid: xe or orcl
+``` -->
+> **Note:** *where sid is the name of the database instance. The default name is xe. and for plsql you can use any sid name.*
+> ```bash
+> sqlplus sys as sysdba
+> ```

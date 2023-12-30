@@ -15,6 +15,9 @@ Overview of PL/SQL:
         Improved Performance
         ...more-👇
 
+
+PL/SQL - Delimiters: https://www.tutorialspoint.com/plsql/plsql_basic_syntax.htm
+PL/SQL - Data Types: https://www.tutorialspoint.com/plsql/plsql_data_types.htm
 Loops:(
     while,
     for,
@@ -90,6 +93,7 @@ BEGIN
         steps_to := steps_to + 1 
         /*
         --[operators] 
+            Assignment ops(:=)
             Arithmetic ops(+,-,*,/,**) 
             Relational ops(=, != or <> or ~=, >, <=,) 
             Comparison ops(LIKE, BETWEEN, IN, IS NULL) 
@@ -115,8 +119,34 @@ BEGIN
 
 
 
-    EXCEPTION
+EXCEPTION
 
 END
 -- Anonymous Blocks
 /
+
+
+SET SERVEROUTPUT ON;
+DECLARE
+    v_test VARCHAR2(20) := 'Hello World';
+BEGIN
+    dbms_output.put_line(v_test);
+END;
+
+-- write a plsql query to display fibonacci series upto 10 terms
+SET SERVEROUTPUT ON;
+DECLARE
+    v_first NUMBER := 0;
+    v_second NUMBER := 1;
+    v_next NUMBER;
+BEGIN
+    dbms_output.put_line(v_first);
+    dbms_output.put_line(v_second);
+
+    FOR i IN 1..8 LOOP
+        v_next := v_first + v_second;
+        dbms_output.put_line(v_next);
+        v_first := v_second;
+        v_second := v_next;
+    END LOOP;
+END;

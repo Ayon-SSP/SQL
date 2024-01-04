@@ -48,6 +48,7 @@ SELECT * FROM pg_catalog.pg_tables; - list all tables
 \! clear
 \d+ tablename - show table structure
 ```
+> psql: [terminal-based](https://www.postgresql.org/docs/current/app-psql.html)
 [lisk to wsl connection](https://chloesun.medium.com/set-up-postgresql-on-wsl2-and-connect-to-postgresql-with-pgadmin-on-windows-ca7f0b7f38ab)
 
 [initilising Pgadmin](https://itslinuxfoss.com/fix-psql-peer-authentication-failed-for-user/#:~:text=To%20fix%20%E2%80%9Cpsql%20Peer%20authentication,are%20explained%20with%20their%20applications.)

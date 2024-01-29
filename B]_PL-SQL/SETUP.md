@@ -156,6 +156,10 @@ Go to the Oracle website and download the Oracle Database Express Edition for Li
    - > This Installation will take some time. So, be patient.
 5. Select the "Single Instance Database Installation" option and click Next.
 6. [Getting Started](https://www.oracle.com/database/technologies/appdev/xe/quickstart.html)
+7. To connect with database 
+   ```bash
+   lsnrctl status
+   ```
 ---
 
 ### 🎗️ My References
@@ -173,6 +177,9 @@ password: 321654
   Pluggable database: localhost:1521/XEPDB1
   EM Express: https://localhost:5500/em
   ```
+
+
+![image](https://github.com/Ayon-SSP/Ayon-SSP/assets/80549753/1e65f5ef-89d1-4356-bde0-40f413d02ead)
 ![image](https://github.com/Ayon-SSP/Ayon-SSP/assets/80549753/8896acd3-b980-40aa-b05e-7f4612383941)
 <!-- save this link https://localhost:5500/em/shell as Database Home for future opens-->
 > #### Oracle Enterprise Manager Database Express: [Database Home](https://localhost:5500/em/shell)
@@ -187,7 +194,7 @@ cd C:\Users\admin\Downloads\PLSQL\sqldeveloper-23.1.1.345.2114-x64\sqldeveloper
 
 <!-- ```bash
 Name: PlayGroundSQL
-Role: SYSDBA
+Role: **SYSDBA**
 username: ayonssp
 password: playing@plsql
 host: localhost
@@ -198,3 +205,8 @@ sid: xe or orcl
 > ```bash
 > sqlplus sys as sysdba
 > ```
+
+
+new extera 
+C:\app\admin\product\21c\dbhomeXE\bin
+lsnrctl start

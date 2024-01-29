@@ -195,6 +195,23 @@ from employee
 group by department
 order by department;
 
+
+SELECT
+    name,
+    credit_limit
+FROM
+    customers
+ORDER BY
+    2 DESC,
+    1;
+	-<or>-
+	state ASC NULLS FIRST;
+	-<or>-
+	state ASC NULLS LAST;
+	-<or>-
+	UPPER( name );
+
+
 -- total count
 select count(*) 
 from employee;
@@ -262,6 +279,13 @@ set salary = 950000
 where id = 8;
 
 
+SELECT
+	first_name "First Name",
+	last_name "Family Name",
+	first_name  || ' '  || last_name AS "Full Name"
+
+FROM
+	employees;
 
 -- select by like name [%,_]
 
@@ -670,6 +694,10 @@ GROUP BY sell_date;
 SELECT first_name, age
 FROM Customers
 LIMIT 2;
+-<or>- FETCH NEXT 5 ROWS ONLY;
+-<or>- FETCH NEXT 10 ROWS WITH TIES;
+-<or>- FETCH FIRST 5 PERCENT ROWS ONLY;
+
 
 
 -- ANY AND SOME -> REM
@@ -712,3 +740,90 @@ insert into tb2 (select * from tbq);
 
 GRANT ALL PRIVILEGES ON DATABASE your_database TO new_username;
 >>>>>>> 88d2ff3c389da92908c93b7cd345659a740f65da
+
+
+
+
+
+
+
+
+
+
+
+
+SELECT
+    EXTRACT(YEAR FROM order_date) YEAR,
+    COUNT( order_id )
+FROM
+    orders
+GROUP BY
+    EXTRACT(YEAR FROM order_date)
+ORDER BY
+    YEAR;
+
+
+
+SELECT
+    customer_id,
+    status,
+    SUM( quantity * unit_price ) sales
+FROM
+    orders
+INNER JOIN order_items
+        USING(order_id)
+GROUP BY
+    ROLLUP(
+        customer_id,
+        status
+    );
+
+
+
+
+SELECT
+	col1,
+	col2,
+	aggregate(col3)
+FROM
+	table_name
+GROUP BY
+	ROLLUP (col1, col2);
+
+
+DELETE
+FROM
+    orders
+WHERE
+    order_id = 1;
+
+DELETE
+FROM
+    order_items
+WHERE
+    order_id = 1;
+
+COMMIT WORK;
+
+
+
+
+Pending
+	Join:
+		INNER JOIN
+		LEFT JOIN
+		RIGHT JOIN
+		FULL OUTER JOIN
+		CROSS JOIN
+		Self Join
+	PIVOT
+	UNPIVOT
+	INSERT
+	INSERT INTO SELECT
+	MERGE
+
+	ORACLE DATA TYPES
+	ORACLE DATA DEFINITION
+	ORACLE CONSTRAINTS
+	ORACLE VIEWS
+

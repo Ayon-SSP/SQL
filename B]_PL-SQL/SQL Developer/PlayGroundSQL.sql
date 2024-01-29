@@ -36,3 +36,15 @@ INSERT INTO employee VALUES (6, 'Rajesh', 60000, 'IT');
 
 SELECT * FROM employee;
 DROP TABLE employee;
+
+
+
+CREATE OR REPLACE TRIGGER check_salary
+BEFORE INSERT ON employees
+FOR EACH ROW
+BEGIN
+    IF :NEW.salary < 30000 THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Salary must be at least 30000.');
+    END IF;
+END;
+/

@@ -650,3 +650,5 @@ select * from orderdetails;
 --  explicit declartion of composit primary key 
 --  constraint pk_orderdetails primary key (order_id,pid)
 
+
+

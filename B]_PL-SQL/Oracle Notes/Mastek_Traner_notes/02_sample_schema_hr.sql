@@ -190,3 +190,6 @@ SELECT * FROM emp WHERE ename LIKE '_S%';
 
 SELECT DISTINCT job FROM emp;
 
+
+
+

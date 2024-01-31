@@ -1,0 +1,28 @@
+DID -> Department ID
+Dname -> Department Name
+EID -> Employee ID
+Ename -> Employee Name
+Btime -> Budgeted Time
+PID -> Project ID
+Pname -> Project Name
+
+
+DID -> Department ID
+Dname -> Department Name
+EID -> Employee ID
+Ename -> Employee Name
+Btime -> Budgeted Time
+PID -> Project ID
+Pname -> Project Name
+
+DID -> Dname 
+EID -> Ename 
+EID and PID ->Btime
+EID -> DID 
+PID -> Pname
+
+CK: (EID, PID) -> (EID, PID, DID, Btime, Ename, Dname, Pname)
+EID -> (EID, DID, Ename, Dname)
+PID -> (PID, Pname)
+
+DID -> Dname

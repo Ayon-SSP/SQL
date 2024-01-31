@@ -92,34 +92,4 @@ insert into orderdetails values('o1002','p1003',1);
 insert into orderdetails values('o1002','p1004',1);
 
 select * from orderdetails;
--- below will give error due to the primary key constraint
---insert into orderdetails values(null,'p1004',1);
---insert into orderdetails values('o1002',null ,1);
 
--- do not un comment its just for your reference
---create table dummy(
---order_id varchar2(5) references orders(order_id),
---pid  varchar2(5) references products(pid),
---quantity numeric(3) not null
---);
---
---insert into dummy values(null,'p1004',1);
---insert into dummy values('o1002',null ,1);
---
---select * from dummy;
-
---drop table dummy;
---truncate table orderdetails;
-
---create table dummy(
---order_id varchar2(5) references orders(order_id) primary key,
---pid  varchar2(5) references products(pid) primary key,
---quantity numeric(3) not null
---);
---Error report -
---ORA-02260: table can have only one primary key
---02260. 00000 -  "table can have only one primary key"
---*Cause:    Self-evident.
---*Action:   Remove the extra primary key.
---  explicit declartion of composit primary key 
---  constraint pk_orderdetails primary key (order_id,pid)

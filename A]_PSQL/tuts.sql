@@ -189,6 +189,11 @@ select name, department
 from employee
 where salary > 1000
 order by salary DESC/ASC;
+-<or>-
+ORDER BY state ASC NULLS LAST;
+-<or>-
+ORDER BY UPPER( name );
+
 
 select department 
 from employee
@@ -294,6 +299,8 @@ select 'foo' like 'f__'; -- _ for single character
 select 'foo' like '%f%'; 
 select 'superman' like '%man%'; 
 select 'batman' ~~ '%man%'; -- ~~ also used like like !~~ not like
+select 'ayon_ssp' like '%\_%' escape '\'; -- escape for escaping the character
+select 'ayon_ssp' like '%&_%' escape '&'; -- escape for escaping the character
 
 select *
 from employee
@@ -825,5 +832,55 @@ Pending
 	ORACLE DATA TYPES
 	ORACLE DATA DEFINITION
 	ORACLE CONSTRAINTS
-	ORACLE VIEWS
 
+
+
+
+
+
+select * from all_tables;
+
+
+DECLARE
+	v_table_name VARCHAR2(30);
+BEGIN
+	FOR t IN (SELECT table_name FROM all_tables WHERE table_name NOT LIKE '%$%' AND table_name NOT LIKE '%SYS%') LOOP
+		v_table_name := t.table_name;
+		DBMS_OUTPUT.PUT_LINE('Table Name: ' || v_table_name);
+	END LOOP;
+END;
+/
+
+
+BEGIN
+	FOR rec IN
+		(
+			SELECT
+				table_name
+			FROM
+				all_tables
+			WHERE
+				table_name LIKE 'TEST_%'
+		)
+	LOOP
+		EXECUTE immediate 'DROP TABLE  '||rec.table_name || ' CASCADE CONSTRAINTS';
+		-- EXECUTE IMMEDIATE 'SELECT * FROM '||rec.table_name || '';
+		-- print the table name
+		DBMS_OUTPUT.PUT_LINE('Table Name: ' || rec.table_name);
+	END LOOP;
+END;
+/
+
+
+
+SELECT * FROM TEST_1;
+-- CREATE A TEST_1 TABLE AND ADD SOME DATA IN IT.
+CREATE TABLE TEST_1 (ID NUMBER, NAME VARCHAR2(20));
+INSERT INTO TEST_1 VALUES (1, 'TEST_1');
+INSERT INTO TEST_1 VALUES (2, 'TEST_2');
+INSERT INTO TEST_1 VALUES (3, 'TEST_3');
+
+
+
+DROP TABLE cars purge;
+DELETE FROM table_name;

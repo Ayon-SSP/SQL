@@ -27,8 +27,8 @@ select Pid,ProductName,UnitPrice from Products where Pid='p1001';
 --	c1003	Sumit Shah
 
 create table customers(
- cust_id varchar2(5) primary key,
- cust_name varchar(25) not null
+    cust_id varchar2(5) primary key,
+    cust_name varchar(25) not null
 );
 INSERT INTO customers values  ('c1001','Amit Jha');
 INSERT INTO customers values  ('c1002','Amit Kumar');

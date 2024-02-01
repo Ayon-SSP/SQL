@@ -1,0 +1,30 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table students_grade {
+  student_id integer [primary key]
+  course_id varchar2 [primary key]
+  student_grade varchar2
+}
+
+Table student {
+  student_id integer [primary key]
+  student_name varchar2
+}
+
+Table course {
+  course_id varchar2 [primary key]
+  faculty_id integer
+  course_name varchar2
+}
+
+Table faculty {
+  faculty_id integer [primary key]
+  faculty_name varchar2
+  faculty_phone varchar2
+}
+
+Ref: student.student_id < students_grade.student_id // many-to-one
+Ref: course.course_id < students_grade.course_id // many-to-one
+Ref: faculty.faculty_id < course.faculty_id // one-to-many
+```

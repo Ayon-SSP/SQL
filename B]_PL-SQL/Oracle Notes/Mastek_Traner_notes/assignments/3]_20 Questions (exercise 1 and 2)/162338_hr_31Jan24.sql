@@ -1,3 +1,5 @@
+-- comp schema
+
 create table branch(
     branchno number(3) constraint pk_branch_branchno PRIMARY key,
     branchName varchar2(25) not null,
@@ -89,107 +91,186 @@ INSERT INTO EMP VALUES(7901,'JOHN_SMITH','CLERK',7698,to_date('23-1-1982','dd-mm
 commit;
 
 
-select * from emp;
-
-
-
-
-
-
-
-
+-- Practice Questions
 --Q1. Display employee name,job,sal,comm in asc order of job
+SELECT ename, job, sal, comm 
+FROM emp 
+ORDER BY job;
+
 --Q2. Display employee name,job,sal,comm in asc order of sal
+SELECT ename, job, sal, comm 
+FROM emp 
+ORDER BY sal;
+
 --Q3. Display employee name,job,sal,comm in asc order of comm
-
-SELECT ename,job,sal,comm FROM emp ORDER BY job;
-SELECT ename,job,sal,comm FROM emp ORDER BY sal;
-SELECT ename,job,sal,comm FROM emp ORDER BY comm;
-
+SELECT ename, job, sal, comm 
+FROM emp 
+ORDER BY comm;
 
 --Q4. Display employee name,job,sal,comm,deptno in asc order of deptno
+SELECT ename, job, sal, comm, deptno 
+FROM emp 
+ORDER BY deptno;
+
 --Q5. Display employee name,job,sal,comm,deptno in asc order of deptno,job
+SELECT ename, job, sal, comm, deptno 
+FROM emp 
+ORDER BY deptno,job;
+
 --Q6. Display employee name,job,sal,comm,deptno in asc order of deptno,sal,comm
-
-SELECT ename,job,sal,comm,deptno FROM emp ORDER BY deptno;
-SELECT ename,job,sal,comm,deptno FROM emp ORDER BY deptno,job;
-SELECT ename,job,sal,comm,deptno FROM emp ORDER BY deptno,sal,comm;
-
+SELECT ename, job, sal, comm, deptno 
+FROM emp 
+ORDER BY deptno,sal,comm;
 
 --Q7. Fetch 5 top employees earning highest
---Q8. Fetch 2nd Highest salaried employee details
---Q9. Display list of all employees working in department 20
-
 SELECT * FROM emp 
 ORDER BY sal DESC 
 FETCH FIRST 5 ROWS ONLY;
 
-SELECT * FROM emp 
+--Q8. Fetch 2nd Highest salaried employee details
+SELECT * 
+FROM emp 
 ORDER BY sal DESC 
 OFFSET 1 ROW FETCH FIRST 1 ROWS ONLY;
 
-SELECT * FROM emp WHERE deptno = 20;
+--Q9. Display list of all employees working in department 20
+SELECT * 
+FROM emp 
+WHERE deptno = 20;
 
 --Q10. Display list of all employees working in department 30
---Q11. Display list of all employees working in department 10
+SELECT * 
+FROM emp 
+WHERE deptno = 30;
 
-SELECT * FROM emp WHERE deptno = 30;
-SELECT * FROM emp WHERE deptno = 10;
+--Q11. Display list of all employees working in department 10
+SELECT * 
+FROM emp 
+WHERE deptno = 10;
+--Q12. Display list of all employees working as ANALYST
+SELECT *
+FROM emp 
+WHERE job = 'ANALYST';
+
+--Q13. Display list of all employees working as CLERK
+SELECT *
+FROM emp 
+WHERE job = 'CLERK';
+
+--Q14. Display list of all employees working as SALESMAN
+SELECT *
+FROM emp 
+WHERE job = 'SALESMAN';
 
 --Q15. Display list of all employees working as PRESIDENT
+SELECT * 
+FROM emp 
+WHERE job = 'PRESIDENT';
+
 --Q16. Display list of all employees EARNING SAL BETWEEN 500 TO 4000
+SELECT * 
+FROM emp 
+WHERE sal BETWEEN 500 AND 4000;
+
 --Q17. Display list of all employees EARNING SAL NOT BETWEEN 500 TO 4000
+SELECT * 
+FROM emp 
+WHERE sal NOT BETWEEN 500 AND 4000;
+
+
 --Q18. COMPARISON
 --Q18.A. Display list of all employees EARNING SAL >500
+SELECT * 
+FROM emp 
+WHERE sal > 500;
+
 --Q18.B. Display list of all employees EARNING SAL <500
+SELECT * 
+FROM emp 
+WHERE sal < 500;
+
 --Q18.C. Display list of all employees EARNING SAL <=500
+SELECT * 
+FROM emp 
+WHERE sal <= 500;
+
 --Q18.D. Display list of all employees EARNING SAL <=500
+SELECT * 
+FROM emp 
+WHERE sal >= 500;
+
 --Q18.E. Display list of all employees EARNING SAL !=800
+SELECT * 
+FROM emp 
+WHERE sal != 800;
+
 --Q18.F. Display list of all employees EARNING SAL =5000
-
-SELECT * FROM emp WHERE job = 'PRESIDENT';
-SELECT * FROM emp WHERE sal BETWEEN 500 AND 4000;
-SELECT * FROM emp WHERE sal NOT BETWEEN 500 AND 4000;
-SELECT * FROM emp WHERE sal > 500;
-SELECT * FROM emp WHERE sal < 500;
-SELECT * FROM emp WHERE sal <= 500;
-SELECT * FROM emp WHERE sal >= 500;
-SELECT * FROM emp WHERE sal != 800;
-SELECT * FROM emp WHERE sal = 5000;
-
+SELECT * 
+FROM emp 
+WHERE sal = 5000;
 
 
 --Q19. LOGICAL OPERATOR AND OR NOT/LIKE/IN/NOT IN/BETWEEN NOT BETWEEN
 --Q19.A DISPLAY EMPLOYEE WORKING IN DEPARTMENT 10 AS CLERK
---Q19.B DISPLAY EMPLOYEE WORKING IN DEPARTMENT 20 AS MANAGER
---Q19.C DISPLAY EMPLOYEE WORKING IN DEPARTMENT 30 AS SALESMAN
---Q19.D DISPLAY EMPLOYEE WHO ARE WORKING AS MANAGER BUT NOT IN DEPT 10
---Q19.E DISPLAY EMPLOYEE WORKING AS CLERK,MANAGER
---Q19.F DISPLAY EMPLOYEE WORKING IN DEPTNO 20,30
---Q19.G DISPLAY EMPLOYEE NOT WORKING IN DEPTNO 20,30
---Q19.H DISPLAY EMPLOYEE NOT WORKING AS CLERK,MANAGER
---Q19.I DISPLAY EMPLOYEE WHO'S NAME STARTS WITH 'S'
---Q19.J DISPLAY EMPLOYEE WHO'S NAME ENDSS WITH 'S'
---Q19.K DISPLAY EMPLOYEE WHO'S NAME HAS  'LL'
---Q19.L DISPLAY EMPLOYEE WHO'S NAME CONTAINS '_'
+SELECT * 
+FROM emp 
+WHERE deptno = 10 AND job = 'CLERK';
 
-SELECT * FROM emp WHERE deptno = 10 AND job = 'CLERK';
-SELECT * FROM emp WHERE deptno = 20 AND job = 'MANAGER';
-SELECT * FROM emp WHERE deptno = 30 AND job = 'SALESMAN';
-SELECT * FROM emp WHERE job = 'MANAGER' AND deptno != 10;
-SELECT * FROM emp WHERE job = 'CLERK' OR job = 'MANAGER';
-SELECT * FROM emp WHERE deptno = 20 OR deptno = 30;
-SELECT * FROM emp WHERE deptno NOT IN (20,30);
-SELECT * FROM emp WHERE job NOT IN ('CLERK','MANAGER');
-SELECT * FROM emp WHERE ename LIKE 'S%';
-SELECT * FROM emp WHERE ename LIKE '%S';
-SELECT * FROM emp WHERE ename LIKE '%LL%';
-SELECT * FROM emp WHERE ename LIKE '%\_%' escape '\';
+--Q19.B DISPLAY EMPLOYEE WORKING IN DEPARTMENT 20 AS MANAGER
+SELECT * 
+FROM emp 
+WHERE deptno = 20 AND job = 'MANAGER';
+
+--Q19.C DISPLAY EMPLOYEE WORKING IN DEPARTMENT 30 AS SALESMAN
+SELECT * 
+FROM emp 
+WHERE deptno = 30 AND job = 'SALESMAN';
+
+--Q19.D DISPLAY EMPLOYEE WHO ARE WORKING AS MANAGER BUT NOT IN DEPT 10
+SELECT * 
+FROM emp 
+WHERE job = 'MANAGER' AND deptno != 10;
+
+--Q19.E DISPLAY EMPLOYEE WORKING AS CLERK,MANAGER
+SELECT * 
+FROM emp 
+WHERE job = 'CLERK' OR job = 'MANAGER';
+
+--Q19.F DISPLAY EMPLOYEE WORKING IN DEPTNO 20,30
+SELECT * 
+FROM emp 
+WHERE deptno = 20 OR deptno = 30;
+
+--Q19.G DISPLAY EMPLOYEE NOT WORKING IN DEPTNO 20,30
+SELECT * 
+FROM emp 
+WHERE deptno NOT IN (20,30);
+
+--Q19.I DISPLAY EMPLOYEE WHO'S NAME STARTS WITH 'S'
+SELECT * 
+FROM emp 
+WHERE job NOT IN ('CLERK','MANAGER');
+
+--Q19.H DISPLAY EMPLOYEE NOT WORKING AS CLERK,MANAGER
+SELECT * 
+FROM emp 
+WHERE ename LIKE 'S%';
+
+--Q19.J DISPLAY EMPLOYEE WHO'S NAME ENDSS WITH 'S'
+SELECT * 
+FROM emp 
+WHERE ename LIKE '%S';
+
+--Q19.K DISPLAY EMPLOYEE WHO'S NAME HAS  'LL'
+SELECT * 
+FROM emp 
+WHERE ename LIKE '%LL%';
+
+--Q19.L DISPLAY EMPLOYEE WHO'S NAME CONTAINS '_'
+SELECT * 
+FROM emp 
+WHERE ename LIKE '%\_%' escape '\';
+
 
 --Q20. DISPLAY UNIUE JOB FROM EMPLOYE TABLE
-
 SELECT DISTINCT job FROM emp;
-
-
-
-

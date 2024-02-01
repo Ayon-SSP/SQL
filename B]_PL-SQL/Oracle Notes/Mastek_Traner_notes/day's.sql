@@ -120,9 +120,9 @@ select cust_id,cust_name from customers;
 --	o1006	15-Dec-23	c1003
 
 create table orders(
-order_id varchar2(5) primary key,
-orderdate date not null,
-cust_id varchar2(5) references  customers(cust_id) 
+    order_id varchar2(5) primary key,
+    orderdate date not null,
+    cust_id varchar2(5) references  customers(cust_id) 
 );
 
 insert into orders values('o1001','12-Dec-23','c1001');		
@@ -153,11 +153,11 @@ select * from orders;
 --	o1007	p1006	1
 
 create table orderdetails(
-order_id varchar2(5) references orders(order_id),
-pid  varchar2(5) references products(pid),
-quantity numeric(3) not null,
-constraint pk_orderdetails primary key (order_id,pid)
-)
+    order_id varchar2(5) references orders(order_id),
+    pid  varchar2(5) references products(pid),
+    quantity numeric(3) not null,
+    constraint pk_orderdetails primary key (order_id,pid)
+);
 
 insert into orderdetails values('o1001','p1001',1);
 insert into orderdetails values('o1001','p1002',1);

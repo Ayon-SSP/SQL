@@ -1,5 +1,6 @@
 // Use DBML to define your database structure
 // Docs: https://dbml.dbdiagram.io/docs
+// RUN: https://dbdiagram.io/d/65ba9143ac844320ae28b625
 
 Table students_grade {
   student_id integer [primary key]

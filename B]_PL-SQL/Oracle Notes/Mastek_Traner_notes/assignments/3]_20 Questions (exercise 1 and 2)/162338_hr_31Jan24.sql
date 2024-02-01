@@ -184,7 +184,7 @@ SELECT * FROM emp WHERE job NOT IN ('CLERK','MANAGER');
 SELECT * FROM emp WHERE ename LIKE 'S%';
 SELECT * FROM emp WHERE ename LIKE '%S';
 SELECT * FROM emp WHERE ename LIKE '%LL%';
-SELECT * FROM emp WHERE ename LIKE '_S%';
+SELECT * FROM emp WHERE ename LIKE '%\_%' escape '\';
 
 --Q20. DISPLAY UNIUE JOB FROM EMPLOYE TABLE
 

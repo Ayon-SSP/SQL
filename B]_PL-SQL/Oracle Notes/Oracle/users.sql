@@ -71,3 +71,63 @@ select * from dba_users
 where username='SYSTEM' or username='MYUSER' or username='AYONSSP';
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Create an user name "assignmentUser"
+alter session set "_ORACLE_SCRIPT"=true;
+CREATE USER assignmentUser IDENTIFIED BY 321654;
+
+-- dba_users display
+
+GRANT SELECT ANY DICTIONARY TO assignmentUser;
+
+SELECT 
+		username, 
+		default_tablespace, 
+		profile, 
+		authentication_type
+	FROM
+		dba_users 
+	WHERE 
+		account_status = 'OPEN'
+	ORDER BY
+		username; 
+
+-- grant connect to assignmentUser
+-- DCL: Grant Control
+grant create session to assignmentUser;     
+grant create table to assignmentUser; 
+grant create view to assignmentUser;
+grant create any trigger to assignmentUser;
+grant create any procedure to assignmentUser;
+grant create SEQUENCE to assignmentUser;
+grant create SYNONYM to assignmentUser;
+grant all PRIVILEGES to assignmentUser;
+grant connect to assignmentUser;
+grant RESOURCE to assignmentUser;
+grant dba to assignmentUser;

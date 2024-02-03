@@ -1,0 +1,60 @@
+for the example below we have one big table put the table in normalized form 1nf, 2nf, 3nf.
+
+OID = OrderID,
+O_Date = OrderDate,
+CID = CustomerID,
+C_Name = CustomerName,
+C_State = CustomerState,
+PID = ProductID,
+P_Desc = ProjectName,
+P_Price = ProductPrice,
+Qty = QuantityPurchased
+
+OID -> O_Date
+CID -> C_Name
+PID -> P_Desc
+PID -> P_Price  
+OID -> CID
+CID -> C_State
+(PID, OID) -> Qty
+
+relations:
+    OID -> (O_Date, CID)
+    CID -> (C_Name, C_State)
+    PID -> (P_Desc, P_Price)
+    (OID, PID) -> Qty
+
+Candidate key: (OID, PID)
+(OID, PID) ->(OID, PID, O_Date, CID, C_Name, C_State, P_Desc, P_Price, Qty)
+
+2nf:
+Candidate key: (OID, PID)
+pa -> npa
+OID -> CID, O_Date, C_Name, C_State
+PID -> P_Desc, P_Price  
+(PID, OID) -> Qty
+
+TABLES for 2nf:
+    Order(OID, CID, O_Date, C_Name, C_State)
+    Product(PID, P_Desc, P_Price)
+    OrderDetails(OID, PID, Qty)
+
+
+3nf:
+npa -> npa
+CID -> (C_Name, C_State)
+
+TABLES for 3nf:
+    Customer(CID_, C_Name, C_State)
+    Product(PID_, P_Desc, P_Price)
+    Order(OID_, CID*, O_Date)
+    OrderDetails(_OID*, _PID*, Qty)
+
+
+Final Tables:
+    Order-Product (OID*, PID*, Qty) 
+    Product_Info (PID, P_Desc, P_Price) 
+    Order_Info (OID, O_Date, CID*) 
+    Customer_Info (CID, C_Name, C_State)
+
+

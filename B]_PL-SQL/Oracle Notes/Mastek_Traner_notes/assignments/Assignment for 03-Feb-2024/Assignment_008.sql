@@ -91,4 +91,4 @@ AND AVG( CASE sg.student_grade
     WHEN 'C' THEN 2
     WHEN 'D' THEN 1
     ELSE 0
-END ) > 3.5;
+END ) > 4 * (80/100);

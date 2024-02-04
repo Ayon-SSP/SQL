@@ -63,40 +63,8 @@ comment on table table_name is 'This is a prat of online shopint project';
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 on delete set NULL
 on delete cascade
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -126,11 +94,3 @@ set
 where condition
 order by column_name desc
 limit 5;
-
-
-
-
-
-
-
-

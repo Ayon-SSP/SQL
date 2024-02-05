@@ -1,3 +1,6 @@
+--Assignment_010   3-FEB-24 
+--SQL QUERIES 
+
 -- DDL Level 2
 -- 1. Create a Sequence: - Create a sequence named 'emp_ld_seq` with a starting value of 100 and an Increment of 1.
 CREATE SEQUENCE emp_ld_seq
@@ -20,6 +23,7 @@ CREATE TABLE Department(
     DeptID NUMBER(2) PRIMARY KEY,
     DeptName VARCHAR2(50)
 );
+
 CREATE TABLE Employee(
     EmpID NUMBER(5) PRIMARY KEY,
     EmpName VARCHAR2(50),
@@ -30,8 +34,8 @@ CREATE TABLE Employee(
 
 ALTER TABLE Employee
 ADD CONSTRAINT fk_emp_dept
-FOREIGN KEY (EmpDepartment)
-REFERENCES Department(DeptID);
+    FOREIGN KEY (EmpDepartment)
+    REFERENCES Department(DeptID);
 
 
 -- 3. Modify Data Type:
@@ -48,4 +52,3 @@ RENAME COLUMN EmpAddress TO EmpLocation;
 -- - Add a unique constraint named 'uniq_name` on the 'EmpName' column in the 'Employee table.
 ALTER TABLE Employee
 ADD CONSTRAINT uniq_name UNIQUE(EmpName);
-

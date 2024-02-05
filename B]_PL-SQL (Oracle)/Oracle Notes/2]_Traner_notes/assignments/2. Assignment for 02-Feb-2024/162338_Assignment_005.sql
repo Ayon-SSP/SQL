@@ -1,3 +1,5 @@
+--Assignment_005   2-FEB-24
+--SQL QUERIES
 
 -- 21. List customers with names in uppercase
 SELECT UPPER(customer_name) AS customer_name

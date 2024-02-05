@@ -1,3 +1,6 @@
+--Assignment_004   2-FEB-24
+--SQL QUERIES
+
 -- 1. Select all products with a price greater than $100
 SELECT product_id, product_id
 FROM product_info 
@@ -78,6 +81,10 @@ WHERE ROWNUM <= 5;
 SELECT order_id, quantity
 FROM order_Product
 ORDER BY quantity DESC;
+-- -<or>-
+SELECT order_id, quantity
+FROM order_Product
+FETCH FIRST 5 ROWS ONLY;
 
 -- 13. Retrieve products with descriptions containing 'Phone'
 SELECT product_id, product_desc
@@ -104,9 +111,13 @@ SELECT order_id, quantity
 FROM order_Product
 WHERE quantity NOT BETWEEN 1 AND 5;
 
--- 18. Display products with prices increased by 10%
-SELECT product_id, product_desc, product_price * 1.1 AS increased_price
+-- 18. Display products with prices increased by 10%, handling null prices
+SELECT product_id, product_desc, 
+        CASE WHEN product_price IS NULL THEN NULL
+          ELSE product_price * 1.1
+        END AS increased_price
 FROM product_info;
+-- END: ed8c6549bwf9
 
 -- 19. Find the average quantity of products in orders
 SELECT AVG(quantity) AS average_quantity

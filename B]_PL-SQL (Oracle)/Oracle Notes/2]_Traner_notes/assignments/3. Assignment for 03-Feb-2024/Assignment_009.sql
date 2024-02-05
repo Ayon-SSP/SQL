@@ -1,3 +1,6 @@
+--Assignment_0089   3-FEB-24 
+--SQL QUERIES 
+
 -- 1. For each question, provide the SQL query that answers the question.
 -- 2. Include comments in your queries to explain the purpose of each query.
 -- 3. Test your queries on the provided tables.
@@ -8,7 +11,7 @@
 -- 1. Create a Table:
 -- - Create a table named 'Employee with columns: 'EmpID (Primary Key), 'EmpName`, `EmpSalary, and 'EmpDepartment.
 CREATE TABLE Employee (
-    EmpID INT PRIMARY ,
+    EmpID INT PRIMARY KEY,
     EmpName VARCHAR(100),
     EmpSalary DECIMAL(10, 2),
     EmpDepartment VARCHAR(100)
@@ -46,5 +49,3 @@ BEGIN
     END IF;
 END;
 /
-
-

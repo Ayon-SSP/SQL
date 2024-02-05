@@ -1,65 +1,12 @@
+--Assignment_006   3-FEB-24
+-- CREATE DB
+
 -- Create below tables in assignmentUser
 -- Grade (SID*,CID*,Grade)
 -- Student (SID, S_name)
 -- Course (CID, C_name, FID*)
 -- Faculty (FID, Faculty, F_phone)
 
-
--- Add records in above tables:
-
--- Student
--- (student, student_name),
--- (101, 'John Smith'),
--- (102, 'Alice Johnson'),
--- (103, 'Bob Miller'),
--- (104, 'Emily Brown'),
--- (105, 'Daniel Kim'),
--- (106, 'Eva Martinez'),
--- (107, 'Gary Wilson'),
--- (108, 'Hannah Lee'),
--- (109, 'Ian Turner'),
--- (110, 'Jessica Hall');
-
--- Course
--- (course_id, course_name, faculty_id),
--- (301, 'Database Management', 201),
--- (302, 'Programming Fundamentals', 202),
--- (303, 'Data Structures', 203),
--- (304, 'Web Development', 204),
--- (305, 'Algorithms', 205),
--- (306, 'Network Security', 206),
--- (307, 'Artificial Intelligence', 207),
--- (308, 'Software Engineering', 208),
--- (309, 'Computer Graphics', 209),
--- (310, 'Operating Systems', 210);
-
--- Grade
--- (student_id, course_id, grade),
--- (101, 301, 'A'),
--- (102, 302, 'B'),
--- (103, 303, 'C'),
--- (104, 304, 'A'),
--- (105, 305, 'B'),
--- (106, 306, 'A'),
--- (107, 307, 'C'),
--- (108, 308, 'B'),
--- (109, 309, 'A'),
--- (110, 310, 'C');
-
--- Faculty
--- (faculty_id, faculty_name, faculty_phone),
--- (201, 'Dr. Anderson', '555-1234'),
--- (202, 'Prof. Davis', '555-5678'),
--- (203, 'Dr. White', '555-9876'),
--- (204, 'Prof. Harris', '555-4321'),
--- (205, 'Dr. Robinson', '555-8765'),
--- (206, 'Prof. Garcia', '555-2345'),
--- (207, 'Dr. Baker', '555-6789'),
--- (208, 'Prof. Murphy', '555-3456'),
--- (209, 'Dr. Carter', '555-7890'),
--- (210, 'Prof. Martin', '555-0123');
-
--- follow this below sql formate to create the table and insert the data
 
 -- Create student table
 CREATE TABLE student (
@@ -90,8 +37,8 @@ CREATE TABLE course (
 
 -- Create students_grade table
 CREATE TABLE students_grade (
-    student_id NUMBER NOT NULL,              -- fk
-    course_id NUMBER NOT NULL,         -- fk
+    student_id NUMBER NOT NULL,            -- fk
+    course_id NUMBER NOT NULL,              -- fk
     student_grade VARCHAR2( 2 ) NOT NULL,
     CONSTRAINT pk_students_grade 
         PRIMARY KEY ( student_id, course_id ),

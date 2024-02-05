@@ -82,7 +82,9 @@ CREATE TABLE order_info (
 CREATE TABLE order_Product (
     product_id NUMBER NOT NULL,
     order_id NUMBER NOT NULL,
-    quantity NUMBER NOT NULL,
+    quantity NUMBER NOT NULL DEFAULT 1,
+    CONSTRAINT order_Product_quantity_ck 
+        CHECK ( quantity > 0 ),
     CONSTRAINT pk_order_Product 
         PRIMARY KEY ( product_id, order_id ),
     CONSTRAINT fk_order_Product_product_info 

@@ -1,0 +1,84 @@
+create table SUPPLIER( 
+ 
+sid int primary key, 
+sname varchar(20) not null, 
+city varchar(20)  constraint nn_city not null
+);
+
+create table PART( 
+ 
+pid int primary key, 
+pname varchar(20) not null, 
+color varchar(20) not null 
+ 
+);
+
+create table CATALOG( 
+ 
+sid int not null, 
+pid int not null, 
+cost int not null, 
+constraint fk_sid primary key(sid,pid), 
+foreign key(sid) references Supplier(sid), 
+foreign key(pid) references Part(pid) 
+);
+
+insert into SUPPLIER(sid,sname,city) values(1,'riya','Mumbai');
+insert into SUPPLIER(sid,sname,city) values(2,'Patel','Bangalore');
+insert into SUPPLIER(sid,sname,city) values(3,'rinkal','Chennai');
+insert into SUPPLIER(sid,sname,city) values(4,'krishna','Delhi');
+
+select * from SUPPLIER;
+
+
+insert into PART(pid,pname,color) values(111,'wood','green');
+insert into PART(pid,pname,color) values(222,'screw','red');
+insert into PART(pid,pname,color) values(333,'Timber','blue');
+insert into PART(pid,pname,color) values(444,'bolt','yellow');
+select * from PART;
+
+
+insert into CATALOG(sid,pid,cost) values(1,111,95);
+insert into CATALOG(sid,pid,cost) values(2,222,5000);
+insert into CATALOG(sid,pid,cost) values(3,333,2000);
+insert into CATALOG(sid,pid,cost) values(4,444,250);
+
+select * from CATALOG;
+
+
+
+alter table PART add WEIGHT varchar(30); 
+select * from PART;
+
+
+alter table SUPPLIER add constraint ck_city check(city in('Mumbai','Bangalore','Delhi','Kolkata','Chennai'));
+
+
+update PART set color='grey' where pid=111;
+select * from PART;
+
+
+update SUPPLIER set city='Mumbai' where sname='Patel';
+select * from SUPPLIER;
+
+
+delete from CATALOG where cost>100 and cost<500;
+select * from CATALOG;
+
+
+alter table SUPPLIER add Country varchar(30);
+select * from SUPPLIER;
+	
+	
+update SUPPLIER set Country='India';
+select * from SUPPLIER;
+
+
+alter table PART modify Color(40);
+alter table PART modify pname(5);
+desc PART;
+
+select * from SUPPLIER where city='Chennai';
+
+
+select sid,pid from CATALOG where cost between 1000 and 5000;

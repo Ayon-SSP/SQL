@@ -626,6 +626,23 @@ insert into odr values (1,299);
 
 
 -- -------------------------< Subqueries in SQL >--------------------
+
+/*
+Subqueries:
+	1. single row subquery
+	2. multiple row subquery
+	3. multiple column subquery
+
+	comparesion:
+		IN
+		NOT <comp>
+		ANY: returns true if any of the subquery values meet the condition
+		ALL: returns true if all of the subquery values meet the condition
+		EXISTS: returns true if the subquery returns one or more records
+		=, >, <, >=, <=, <>, !=
+
+
+*/
 -- Display the names who earns above average salary of there own department
 -- like in sde3 avg = 100k and above avg is ayon, Karmakar where both are sde3 and both earns above 100k
 select name from employee
@@ -636,8 +653,10 @@ select 'YES'
 from employee 
 where name='AYON'; -- Print yes if where True
 
-
-
+-- using outer data in subquery
+select name from employee emp1
+where salary > (select avg(salary) from employee where emp1.department = department)
+group by salary;
 
 
 select * from employee;

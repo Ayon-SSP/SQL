@@ -73,11 +73,21 @@ FROM dual; -- One
 SELECT DECODE(2, 1, 'One',  2, 'Two')
 FROM dual; -- Two
 
-DECODE(3, 1, 'One',  2, 'Two', 'Not one or two')
-DECODE(country_id, 'US','United States', 'UK', 'United Kingdom', 'JP','Japan', 'CA', 'Canada', 'CH','Switzerland', 'IT', 'Italy', country_id) country
 DECODE(NULL,NULL,'Equal','Not equal')
 
+DECODE(country_id, 
+    'US','United States', 
+    'UK', 'United Kingdom', 
+    'JP','Japan', 
+    'CA', 'Canada', 
+    'CH','Switzerland', 
+    'IT', 'Italy', country_id) AS country
 
-
-
-
+SELECT customer_id,
+    DECODE(credit_rating,
+            'A', 'Excellent',
+            'B', 'Good',
+            'C', 'Fair',
+            'D', 'Needs Improvement',
+            'Other', 'Unknown') AS credit_status
+FROM customers;

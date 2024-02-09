@@ -1,0 +1,94 @@
+create table supplier(
+
+sid int  primary key not null,
+sname varchar(15) not null,
+city varchar(15) not null
+);
+
+desc supplier
+
+create table part( 
+pid int primary key, 
+pname varchar(20) not null, 
+color varchar(20) not null  
+);
+desc part
+
+create table catalog( 
+
+sid int not null, 
+pid int not null, 
+cost int not null, 
+constraint fk_sid primary key(sid,pid), 
+foreign key(sid) references Supplier(sid), 
+foreign key(pid) references Part(pid) 
+);
+desc catalog
+
+insert into supplier(sid,sname,city) values(1,'Raj','Mumbai');
+insert into supplier(sid,sname,city) values(2,'Joy','Delhi');
+insert into supplier(sid,sname,city) values(3,'Rajdeep','Mumbai');
+insert into supplier(sid,sname,city) values(4,'Andrew','Up');
+insert into supplier(sid,sname,city) values(5,'Jason','Kolkata');
+insert into supplier(sid,sname,city) values(6,'Root','Surat');
+
+select * from supplier;
+
+
+insert into part(pid,pname,color) values(10,'p-1','Red');
+insert into part(pid,pname,color) values(20,'p-2','Blue');
+insert into part(pid,pname,color) values(30,'p-3','Red');
+insert into part(pid,pname,color) values(40,'p-4','Green');
+insert into part(pid,pname,color) values(50,'p-5','Yellow');
+
+select * from part;
+
+insert into catalog(sid,pid,cost) values(1,10,200);
+insert into catalog(sid,pid,cost) values(2,10,350);
+insert into catalog(sid,pid,cost) values(1,20,100);
+insert into catalog(sid,pid,cost) values(3,30,1000);
+insert into catalog(sid,pid,cost) values(3,10,200);
+insert into catalog(sid,pid,cost) values(4,50,20);
+insert into catalog(sid,pid,cost) values(2,50,600);
+insert into catalog(sid,pid,cost) values(5,40,400);
+insert into catalog(sid,pid,cost) values(5,20,2000);
+insert into catalog(sid,pid,cost) values(1,30,500);
+insert into catalog(sid,pid,cost) values(1,40,70);
+insert into catalog(sid,pid,cost) values(2,20,170);
+insert into catalog(sid,pid,cost) values(2,30,300);
+
+select * from catalog;
+
+
+
+
+
+select * from supplier 
+
+where sid in(select distinct(sid) from catalog where pid in (select pid from part where color='Red'));
+
+
+select pid,count(*)
+from catalog
+group by pid;
+
+select * from supplier
+where upper(city)='MUMBAI' and upper(sname) like '__J%';
+
+
+alter table supplier add scontact number(10)constraint ck_count check(scontact like '0%');
+
+select * from supplier;
+
+create index idx on supplier (sname,city);
+
+select sid from catalog group by sid having count(*)>3;
+
+select * from supplier where sid not in(select distinct(sid)from catalog);
+
+select avg(cost) from catalog where pid in(select pid from part where upper(color)='GREEN');
+
+
+
+
+

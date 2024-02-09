@@ -1,0 +1,94 @@
+create table Candidate(
+
+cid number(10) constraint pk_cid primary key,
+cname varchar2(20),
+caddress varchar2(50),
+cbirth_dt date
+);
+
+create table Test(
+
+tid number(10) constraint pk_tid primary key,
+tname varchar2(20),
+tot_marks number(20),
+pass_marks number(20)
+);
+
+create table Test_Centre(
+
+tcid number(10) constraint pk_tcid primary key,
+location varchar2(50),
+mgr varchar2(20),
+capacity number(20)
+);
+
+create table Test_Taken(
+cid number(10),
+tid number(10),
+tcid number(10),
+Test_dt date,
+score number(20),
+constraint pk_cidtidtcid primary key(cid,tid,tcid),
+constraint fk_cid foreign key(cid) references Candidate(cid) on delete cascade,
+constraint fk_tid foreign key(tid) references Test(tid) on delete cascade,
+constraint fk_tcid foreign key(tcid) references Test_Centre(tcid) on delete cascade
+
+);
+
+insert into Candidate values(1,'Gautam Maiyani','Kirti Stambh','14-Nov-2002');
+insert into Candidate values(2,'Raval Krish ','Akota','07-JUN-2001');
+insert into Candidate values(3,'Roy Makwana','Alkapuri','07-FEB-2003');
+insert into Candidate values(4,'Mayank Trivedi','Gotri','12-JAN-2001');
+insert into Candidate values(5,'Tirth Shah','Akota','24-JAN-2001');
+insert into Candidate values(6,'Raj Patel','Karelibaugh','01-JUN-2002');
+
+select * from Candidate;
+
+
+
+insert into test values(1,'JEE Mains',360,100) ;
+insert into test values(2,'JEE Advanced',480,120) ;
+insert into test values(3,'NEET UG',720,360) ;
+insert into test values(4,'GUJCET',120,40) ;
+SELECT* from test;
+
+insert into Test_Centre values(1,'Gotri','Raj Shah',200) ;
+insert into Test_Centre values(2,'Alkapuri','Nilesh Patel',100) ;
+insert into Test_Centre values(3,'Manjalpur','Nikita Parmar',150) ;
+insert into Test_Centre values(4,'Karelibaugh','Henil Shah',230) ;
+insert into Test_Centre values(5,'Akota','Mayur Desai',270) ;
+insert into Test_Centre values(6,'GIDC','Amit Shah',110) ;
+SELECT* from Test_Centre;
+
+
+insert into Test_Taken values(1,1,4,'15-JUNE-2020',220);
+insert into Test_Taken values(1,2,4,'20-MAY-2020',155);
+insert into Test_Taken values(1,4,1,'20-APR-2020',118);
+insert into Test_Taken values(2,3,2,'25-JUNE-2020',580);
+insert into Test_Taken values(3,3,2,'20-MAY-2020',490);
+insert into Test_Taken values(4,1,1,'20-APR-2020',120);
+insert into Test_Taken values(4,2,4,'15-MAY-2020',25);
+insert into Test_Taken values(4,4,3,'25-APR-2020',99);
+insert into Test_Taken values(5,1,2,'20-APR-2020',100);
+insert into Test_Taken values(5,4,2,'25-APR-2020',70);
+insert into Test_Taken values(6,1,1,'20-APR-2020',200);
+insert into Test_Taken values(6,2,3,'15-MAY-2020',180);
+SELECT* from Test_Taken;
+
+select tt.tid, tname, tt.tcid, location, count(*) as No_Of_Candidates from Test_Taken tt , Test t,Test_Centre tc where tt.tid = t.tid and tt.tcid = tc.tcid group by(tt.tid,tt.tcid,tname,location) order by(tid);
+
+select c.* from Candidate c ,Test_Centre tc, Test_Taken tt  where c.cid = tt.cid and tc.tcid = tt.tcid and upper(location) = 'MANJALPUR' and score in (select score from test_taken tt1 ,Candidate c1 where tt1.cid = c.cid and upper(cname) = 'GAUTAM MAIYANI');
+
+
+
+
+
+
+
+
+10th quries....
+create view v as select t1.cid,c.cname,t1.tid,t2.tname ,t1.score from test_taken t1 join test t2 on 
+t1.tid=t2.tid join candidate c on c.cid=t1.cid with read only;
+select * from v;
+
+

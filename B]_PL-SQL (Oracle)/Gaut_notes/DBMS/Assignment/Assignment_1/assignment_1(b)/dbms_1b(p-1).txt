@@ -1,0 +1,41 @@
+create table TEAM_MASTER(
+
+team_id int primary key not null,
+team_name varchar(10) not null
+);
+desc TEAM_MASTER
+
+create table PLAYER(
+
+team_id int not null,
+pid int not null,
+pname varchar(20) not null,
+pbirthdate date not null,
+constraint pk_sid primary key(team_id,pid),
+foreign key(team_id) references TEAM_MASTER(team_id)
+);
+desc PLAYER
+
+create table SCORE(
+
+team_id int not null,
+pid int not null,
+run_made_out int not null,
+b_id int not null,
+bteam_id int not null,
+constraint sk_sid primary key(team_id,pid)
+);
+desc SCORE
+
+create table BALLING(
+
+team_id int not null,
+b_id int not null,
+overs int not null,
+maiden int not null,
+runs_given int not null,
+wickets_taken int not null,
+constraint bk_sid primary key(team_id,b_id)
+);
+desc BALLING
+

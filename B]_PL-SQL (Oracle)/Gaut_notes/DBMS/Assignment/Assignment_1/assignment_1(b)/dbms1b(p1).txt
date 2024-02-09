@@ -1,0 +1,100 @@
+create table Team_Master(
+
+team_id number(5) constraint pk_team_id primary key ,
+team_name varchar2(20) 
+); desc Team_Master
+    
+create table Player(
+
+team_id number(5),
+pid number(5),
+pname varchar2(30),
+pbirthdate date,
+constraint fk_team_id foreign key(team_id) references Team_Master(team_id) on delete cascade ,
+constraint pk_team_id_pid primary key(team_id,pid)
+); desc Player
+    
+create table Score(
+
+team_id number(5),
+pid number(5),
+runs_made number(5),
+out_type varchar2(20),
+bid number(5),
+bteam_id number(5),
+constraint fk1_team_id_pid foreign key(team_id,pid) references Player(team_id,pid) ,
+constraint fk2_bteam_id_bid foreign key(bteam_id,bid) references Player(team_id,pid) ,
+constraint pkS_team_id_pid primary key(team_id,pid) 
+); desc Score
+    
+create table Balling(
+
+team_id number(5),
+bid number(5),
+overs number(10),
+maiden number(5),
+runs_given number(5),
+wickets_taken number(10),
+constraint fk_team_id_bid foreign key(team_id,bid) references Player(team_id,pid),
+constraint pk_team_id_bid primary key(team_id,bid)
+); desc Balling
+
+insert into Team_Master values(101,'India');
+insert into Team_Master values(102,'Australia');
+insert into Team_Master values(103,'England');
+insert into Team_Master values(104,'SouthAfrica');
+insert into Team_Master values(105,'WestIndies');
+
+Select * from Team_Master;
+
+insert into Player values(101,1,'MS Dhoni',to_date('07-07-1981','dd-mm-yyyy')) ;
+insert into Player values(101,2,'Virat Kohli',to_date('05-11-1988','dd-mm-yyyy')) ;
+insert into Player values(101,3,'Ravindra Jadeja',to_date('06-12-1988','dd-mm-yyyy')) ;
+insert into Player values(102,1,'Steve Smith',to_date('01-11-1988','dd-mm-yyyy')) ;
+insert into Player values(102,2,'David Warner',to_date('08-12-1984','dd-mm-yyyy')) ;
+insert into Player values(102,3,'Glen Johnsen',to_date('21-09-1995','dd-mm-yyyy')) ;
+insert into Player values(103,1,'Eion Morgan',to_date('17-04-1982','dd-mm-yyyy')) ;
+insert into Player values(103,2,'Ben Stokes',to_date('20-02-1989','dd-mm-yyyy')) ;
+insert into Player values(103,3,'Moin Ali',to_date('18-06-1987','dd-mm-yyyy')) ;
+insert into Player values(104,1,'Michel Starks',to_date('22-06-1983','dd-mm-yyyy')) ;
+insert into Player values(104,2,'AB de Villiers',to_date('15-02-1987','dd-mm-yyyy')) ;
+insert into Player values(105,1,'Bravo',to_date('10-07-1988','dd-mm-yyyy')) ;
+insert into Player values(105,2,'Chris Gayle',to_date('10-01-1979','dd-mm-yyyy')) ;
+select * from Player;
+
+insert into Score values(101,1,101,'Bowled',2,103) ;
+insert into Score values(101,2,79,'Caught',1,105) ;
+insert into Score values(101,3,34,'Caught',2,103) ;
+insert into Score values(102,1,36,'Stumped',3,103) ;
+insert into Score values(102,2,5,'LBW',2,105) ;
+insert into Score values(103,1,44,'Caught',1,105) ;
+insert into Score values(104,1,68,'Stumped',1,105) ;
+insert into Score values(104,2,23,'Caught',2,103) ;
+Select *from Score;
+
+
+insert into Balling values(103,2,4,0,28,2);
+insert into Balling values(105,1,4,0,22,2);
+insert into Balling values(103,3,3,0,36,0);
+insert into Balling values(105,2,4,1,45,1);
+insert into Balling values(102,3,2,0,22,0);
+insert into Balling values(101,3,4,1,21,4);
+Select *from Balling;
+
+select * from Balling where wickets_taken = (select max(wickets_taken) from Balling);
+
+
+select * from Player where pid in (select pid from Score where runs_made > 25) and (to_char(pbirthdate,'Mon') = 'Feb') ;
+
+select p.team_id,pid,pname as Name,overs,maiden,runs_given as Run,wickets_taken as Wickets from Player p , Balling b where p.pid = b.bid and p.team_id = b.team_id and maiden <= 3 ;
+
+select p.team_id,bid,pname as Name,runs_given as Runs from Player p , Balling b where p.pid = b.bid and p.team_id = b.team_id ;
+
+
+select team_id,out_type,count(*) as count from Score group by (team_id,out_type) order by team_id ;
+
+select * from Player where round(sysdate-pbirthdate) > 40*365 ;
+
+select p.team_id, p.pid, pname as "ALL ROUNDER" from Player p ,Score s , Balling b where s.pid=b.bid and s.team_id=b.team_id and p.pid=s.pid and p.team_id=s.team_id ;
+
+

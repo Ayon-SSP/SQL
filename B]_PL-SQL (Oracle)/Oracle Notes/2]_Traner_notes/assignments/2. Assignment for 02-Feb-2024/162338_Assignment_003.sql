@@ -10,17 +10,13 @@
 -- 105              Printer	        200.00
 
 -- Insert data into product_info table
-INSERT INTO product_info (product_desc, product_price)
-VALUES ('Laptop', 1200.00);
-INSERT INTO product_info (product_desc, product_price)
-VALUES ('Smartphone', 700.00);
-INSERT INTO product_info (product_desc, product_price)
-VALUES ('Headphones', 50.00);
-INSERT INTO product_info (product_desc, product_price)
-VALUES ('Tablet', 300.00);
-INSERT INTO product_info (product_desc, product_price)
-VALUES ('Printer', 200.00);
-
+INSERT ALL
+    INTO product_info (product_desc, product_price) VALUES ('Laptop', 1200.00)
+    INTO product_info (product_desc, product_price) VALUES ('Smartphone', 700.00)
+    INTO product_info (product_desc, product_price) VALUES ('Headphones', 50.00)
+    INTO product_info (product_desc, product_price) VALUES ('Tablet', 300.00)
+    INTO product_info (product_desc, product_price) VALUES ('Printer', 200.00)
+SELECT 1 FROM DUAL;
 
 -- customer_info		
 -- customer_id(pk)	customer_name	customer_state
@@ -31,16 +27,13 @@ VALUES ('Printer', 200.00);
 -- 205              Daniel Kim	    Illinois
 
 -- Insert data into customer_info table
-INSERT INTO customer_info (customer_name, customer_state)
-VALUES ('John Smith', 'California');
-INSERT INTO customer_info (customer_name, customer_state)
-VALUES ('Alice Johnson', 'New York');
-INSERT INTO customer_info (customer_name, customer_state)
-VALUES ('Bob Miller', 'Texas');
-INSERT INTO customer_info (customer_name, customer_state)
-VALUES ('Emily Brown', 'Florida');
-INSERT INTO customer_info (customer_name, customer_state)
-VALUES ('Daniel Kim', 'Illinois');
+INSERT ALL
+    INTO customer_info (customer_name, customer_state) VALUES ('John Smith', 'California')
+    INTO customer_info (customer_name, customer_state) VALUES ('Alice Johnson', 'New York')
+    INTO customer_info (customer_name, customer_state) VALUES ('Bob Miller', 'Texas')
+    INTO customer_info (customer_name, customer_state) VALUES ('Emily Brown', 'Florida')
+    INTO customer_info (customer_name, customer_state) VALUES ('Daniel Kim', 'Illinois')
+SELECT 1 FROM DUAL;
 
 
 
@@ -53,16 +46,13 @@ VALUES ('Daniel Kim', 'Illinois');
 -- 305	            2024-02-05      205
 
 -- Insert data into order_info table
-INSERT INTO order_info (order_date, customer_id)
-VALUES (TO_DATE('2024-02-01', 'YYYY-MM-DD'), 201);
-INSERT INTO order_info (order_date, customer_id)
-VALUES (TO_DATE('2024-02-02', 'YYYY-MM-DD'), 202);
-INSERT INTO order_info (order_date, customer_id)
-VALUES (TO_DATE('2024-02-03', 'YYYY-MM-DD'), 203);
-INSERT INTO order_info (order_date, customer_id)
-VALUES (TO_DATE('2024-02-04', 'YYYY-MM-DD'), 204);
-INSERT INTO order_info (order_date, customer_id)
-VALUES (TO_DATE('2024-02-05', 'YYYY-MM-DD'), 205);
+INSERT ALL
+    INTO order_info (order_date, customer_id) VALUES (TO_DATE('2024-02-01', 'YYYY-MM-DD'), 201)
+    INTO order_info (order_date, customer_id) VALUES (TO_DATE('2024-02-02', 'YYYY-MM-DD'), 202)
+    INTO order_info (order_date, customer_id) VALUES (TO_DATE('2024-02-03', 'YYYY-MM-DD'), 203)
+    INTO order_info (order_date, customer_id) VALUES (TO_DATE('2024-02-04', 'YYYY-MM-DD'), 204)
+    INTO order_info (order_date, customer_id) VALUES (TO_DATE('2024-02-05', 'YYYY-MM-DD'), 205)
+SELECT 1 FROM DUAL;
 
 
 -- order_Product		
@@ -76,17 +66,12 @@ VALUES (TO_DATE('2024-02-05', 'YYYY-MM-DD'), 205);
 -- 103	            305               2
 
 -- Insert data into order_Product table
-INSERT INTO order_Product (product_id, order_id, quantity)
-VALUES (101, 301, 2);
-INSERT INTO order_Product (product_id, order_id, quantity)
-VALUES (103, 301, 1);
-INSERT INTO order_Product (product_id, order_id, quantity)
-VALUES (102, 302, 3);
-INSERT INTO order_Product (product_id, order_id, quantity)
-VALUES (105, 303, 1);
-INSERT INTO order_Product (product_id, order_id, quantity)
-VALUES (104, 304, 2);
-INSERT INTO order_Product (product_id, order_id, quantity)
-VALUES (101, 305, 1);
-INSERT INTO order_Product (product_id, order_id, quantity)
-VALUES (103, 305, 2);
+INSERT ALL
+    INTO order_Product (product_id, order_id, quantity) VALUES (101, 301, 2)
+    INTO order_Product (product_id, order_id, quantity) VALUES (103, 301, 1)
+    INTO order_Product (product_id, order_id, quantity) VALUES (102, 302, 3)
+    INTO order_Product (product_id, order_id, quantity) VALUES (105, 303, 1)
+    INTO order_Product (product_id, order_id, quantity) VALUES (104, 304, 2)
+    INTO order_Product (product_id, order_id, quantity) VALUES (101, 305, 1)
+    INTO order_Product (product_id, order_id, quantity) VALUES (103, 305, 2)
+SELECT 1 FROM DUAL;

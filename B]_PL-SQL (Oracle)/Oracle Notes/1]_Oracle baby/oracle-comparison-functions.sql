@@ -15,7 +15,7 @@ SELECT COALESCE(NULL, NULL, NULL, NULL, NULL, NULL) FROM dual; -- null
 -- nvl(a, b) returns b.
 
 SELECT NVL(100,200)
-FROM dual;
+FROM dual; -- 100
 
 SELECT NVL(NULL, 'a is null && i"m b')
 FROM dual;

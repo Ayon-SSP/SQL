@@ -703,6 +703,7 @@ end
 from employee;
 
 
+-- [WHERE condition]: Optional conditional clause to filter the data before applying DISTINCT.
 -- problems
 # Write your MySQL query statement below
 SELECT 

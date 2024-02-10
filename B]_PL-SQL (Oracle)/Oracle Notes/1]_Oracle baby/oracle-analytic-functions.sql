@@ -28,7 +28,7 @@ alter table emp add dept varchar2(20);
 update emp set dept = 'Tech_ERP' where empno in (7369, 7499, 7521, 7566, 7698, 7782, 7839);
 update emp set dept = 'AD' where empno in (7902, 7876, 7788, 7934);
 update emp set dept = 'HCM' where empno in (7654, 7844, 7900, 7901);
-
+    
 select dept, sal, 
     ROUND(CUME_DIST() OVER (PARTITION BY dept ORDER BY sal), 3) * 100 || '%' as cume_dist
 from emp;
@@ -53,12 +53,18 @@ SELECT ename, sal, dept,
         ) as last_value
 FROM emp;
 
--- LEAD: return the value of the next row
+-- LEAD: return the value of the next row(larger group will in the top)
 SELECT ename, sal, dept,
     LEAD(ename, 2, 'over loaded') OVER (ORDER BY sal) as next_sal
 FROM emp;
 
 -- LAG: return the value of the previous row
+
+-- NTILE: divide the rows in a group into n buckets
+SELECT ename, sal, dept,
+    NTILE(4) OVER (PARTITION BY dept ORDER BY sal) as quartile
+FROM emp;
+
 
 -- PERCENTILE_CONT: return the value at the specified percentile
 
@@ -80,7 +86,7 @@ SELECT ename, sal, dept,
     ROUND(PERCENT_RANK() OVER (
         PARTITION BY dept
         ORDER BY sal
-    ) * 100,2) || '%' percent_rank
+    ) * 100, 2) || '%' percent_rank
 FROM emp;
 
 -- DENSE_RANK: return the rank of a value in a group
@@ -94,6 +100,8 @@ FROM emp;
 
 
 -- NTH_VALUE: return the value of the nth row in a group
+-- NTH_VALUE returns NULL if there aren't enough rows in the window to reach the specified n.
+-- n: The position of the desired row (1st, 2nd, 3rd...). It must be a positive integer.
 SELECT
     product_id,
     product_name,
@@ -111,25 +119,18 @@ FROM
 -- ROW_NUMBER() OVER (PARTITION BY partition_column(s) ORDER BY order_column(s))
 SELECT * FROM emp;
 
-SELECT *,
+SELECT *,  -- this is eg we can use * like this
     ROW_NUMBER() OVER (
         PARTITION BY dept
         ORDER BY sal DESC
-    ) as row_number
+    ) as row_num
 FROM emp;
 
-
-    SELECT *
-    FROM (
-        SELECT *, ROW_NUMBER() OVER (PARTITION BY group_column ORDER BY sort_column) AS row_num
-    FROM your_table
-    ) AS subquery
-    WHERE row_num = 1;
-
-
-
+-- ranking in indusivial groups
 SELECT *
-FROM (SELECT *,
-        ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY order_date) AS row_num
-    FROM Delivery)
-WHERE row_num = 1;
+FROM (
+    SELECT product_id, year, quantity, price,
+        ROW_NUMBER() OVER (PARTITION BY year ORDER BY year) AS group_rank
+    FROM sales
+) AS ranked_sales
+WHERE group_rank = 1;

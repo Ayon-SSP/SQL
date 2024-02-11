@@ -45,3 +45,22 @@ REGEXP_REPLACE( 'This is a playlist', 'is', 'IS' )  -> ThIS IS a playlist
 REGEXP_SUBSTR( 'This is a playlist', 'is' )  -> is
 -- ...THERE ARE MANY READ FORM DOCS: https://www.oracletutorial.com/oracle-string-functions/
 REPLACE( 'This is a test', 'is', 'IS' ) -> ThIS IS a test
+
+
+-- LISTAGG: Concatenates the values of a column into a single string.
+-- LISTAGG(expression [ WITHIN GROUP ( ORDER BY expression [, expression] ... ) [, DISTINCT ] [ , delimiter ] )
+SELECT 
+  customer_id, 
+  LISTAGG(order_id, ', ') 
+    WITHIN GROUP (ORDER BY order_date DESC) AS order_list
+FROM orders
+GROUP BY customer_id
+FILTER (WHERE proficiency_level > 2)
+ORDER BY customer_id;
+
+SELECT level, department_id, LISTAGG(employee_name, ', ') AS dept_employees
+FROM employees
+START WITH manager_id IS NULL
+CONNECT BY PRIOR employee_id = manager_id
+ORDER BY level, department_id;
+

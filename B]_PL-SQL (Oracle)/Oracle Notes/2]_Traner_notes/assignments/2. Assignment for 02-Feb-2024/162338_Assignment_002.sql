@@ -28,21 +28,26 @@ GRANT RESOURCE TO assignmentUser;
 GRANT ALL PRIVILEGES TO assignmentUser;
 GRANT DBA TO assignmentUser;                   -- system-level privileges
 GRANT SELECT, INSERT, UPDATE, DELETE ON exampleTable TO assignmentUser; -- object-level privileges
+-- GRANT SELECT, UPDATE ON <table_name> TO <username>;
+-- CREATE ROLE <role_name> WITH SELECT, UPDATE ON <table_name>;
+-- GRANT <role_name> TO <username>;
+-- REVOKE SELECT, UPDATE ON <table_name> FROM <username>;
+-- REVOKE <role_name> FROM <username>;
 
 -- dba_users display
 SELECT 
-		username, 
-		default_tablespace, 
-		profile, 
-		authentication_type
-	FROM
-		dba_users 
-	WHERE 
-		account_status = 'OPEN'
-	ORDER BY
-		username; 
+    username, 
+    default_tablespace, 
+    profile, 
+    authentication_type
+FROM
+    dba_users 
+WHERE 
+    account_status = 'OPEN'
+ORDER BY
+    username; 
 
--- drop user assignmentUser
+-- drop user
 drop user assignmentUser;
 
 

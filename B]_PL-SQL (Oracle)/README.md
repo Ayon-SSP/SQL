@@ -4,6 +4,7 @@
 - PL/SQL is Oracle's proprietary extension of SQL. 
 - Used Server-side programming language.
 
+## ➡️ [sql-style-guide](https://handbook.gitlab.com/handbook/business-technology/data-team/platform/sql-style-guide/)
 ## 📐 Setting Up PL/SQL on Linux Ubuntu/WSL
 > REFER TO [SETUP.md](SETUP.md) or [`Setting Up PL/SQL on Linux Ubuntu/WSL`](https://dev.to/ayon_ssp/setting-up-plsql-on-linux-ubuntuwsl-376d) FOR SETUP.
 

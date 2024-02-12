@@ -36,18 +36,18 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON exampleTable TO assignmentUser; -- objec
 
 -- dba_users display
 SELECT 
-		username, 
-		default_tablespace, 
-		profile, 
-		authentication_type
-	FROM
-		dba_users 
-	WHERE 
-		account_status = 'OPEN'
-	ORDER BY
-		username; 
+    username, 
+    default_tablespace, 
+    profile, 
+    authentication_type
+FROM
+    dba_users 
+WHERE 
+    account_status = 'OPEN'
+ORDER BY
+    username; 
 
--- drop user assignmentUser
+-- drop user
 drop user assignmentUser;
 
 

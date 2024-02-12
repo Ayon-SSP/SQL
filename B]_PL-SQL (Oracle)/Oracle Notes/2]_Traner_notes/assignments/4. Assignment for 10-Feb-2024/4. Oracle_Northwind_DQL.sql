@@ -168,13 +168,16 @@ FROM Products;
 
 -- 12. Calculate sales price for each order after discount is applied. 
 SELECT
-  OrderID,
-  ProductID,
-  UnitPrice,
-  Quantity,
-  Discount,
-  (UnitPrice * Quantity) * (1 - Discount) AS SalesPrice
-FROM OrderDetails;
+  O.OrderID,
+  O.ProductID,
+  P.ProductName,
+  O.UnitPrice,
+  O.Quantity,
+  O.Discount,
+  (O.UnitPrice * O.Quantity) * (1 - O.Discount) AS SalesPrice
+FROM OrderDetails O
+LEFT JOIN Products P
+ON O.ProductID = P.ProductID;
 
 -- 13. Sales by Category: For each category, we get the list of products sold and the total sales amount. 
 SELECT 

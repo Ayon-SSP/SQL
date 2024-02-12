@@ -1,3 +1,4 @@
+-- [ChatGPT](https://chat.openai.com/c/b9353eb4-fce8-45d9-ad2c-f1456d96034f)
 -- https://youtu.be/CCm4IY-Ntfw?si=v5JxQ_b-tFjCsoEB
 -- Groupings
 -- Grouping sets – introduce you to the grouping set concepts and show you how to generate multiple grouping sets in a query.

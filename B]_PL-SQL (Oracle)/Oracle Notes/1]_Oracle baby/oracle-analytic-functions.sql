@@ -1,6 +1,47 @@
 -- Link: https://www.oracletutorial.com/oracle-analytic-functions
 -- Vdo: https://www.youtube.com/playlist?list=PLdnPqkBptCEITvVQtcOmKUgA7xT6Fqixc
 
+
+/*
+-- Analytical Functions
+Analytical functions in Oracle SQL are a set of powerful tools used for performing complex calculations 
+across a set of rows returned by a query. They allow you to compute aggregated values such as moving 
+averages, cumulative sums, rankings, and other statistical calculations without needing to use subqueries 
+or self-joins.
+
+1. Operate on a group of rows
+2. Compute values based on order
+3. Do not affect result set
+4. Commonly used for reporting and analysis
+
+
+*/
+
+-- RANK() OVER() - return the rank of a value in a group(rank skipps)
+-- DENSE_RANK() - return the rank of a value in a group (no skipps)
+-- PERCENT_RANK() OVER () - return the percentile rank of a value in a group
+-- CUME_DIST() OVER () - return the cumulative distribution of a value in a group
+-- ROW_NUMBER() OVER () - return the sequential number of a row within a group
+-- NTILE() OVER () - divide the rows in a group into n buckets
+-- FIRST_VALUE() OVER () - return the first value in a group
+-- LAST_VALUE() OVER () - return the last value in a group
+-- LEAD() OVER () - return the value of the next row
+-- LAG() OVER () - return the value of the previous row
+-- PERCENTILE_CONT() OVER () - return the value at the specified percentile
+-- PERCENTILE_DISC() OVER () - return the value at the specified percentile
+-- NTH_VALUE() OVER () - return the value of the nth row in a group
+-- AVG() OVER () - return the average of a set of values
+-- SUM() OVER () - return the sum of a set of values
+-- MAX() OVER () - return the maximum value in a set of values
+-- MIN() OVER () - return the minimum value in a set of values
+
+
+
+
+
+
+
+
 -- CUME_DIST 0 < ret<= 1
 -- CUME_DIST() - non parameters funk
 -- CUME_DIST() = (R) / N
@@ -134,3 +175,29 @@ FROM (
     FROM sales
 ) AS ranked_sales
 WHERE group_rank = 1;
+
+-- AVG(), SUM(), MAX(), MIN()
+/*
+student_name | score | class
+-------------|-------|------
+Alice        | 90    | A
+Bob          | 85    | A
+Charlie      | 80    | B
+David        | 85    | B
+
+SELECT 
+    student_name,
+    score,
+    AVG(score) OVER () AS overall_average,
+    AVG(score) OVER (PARTITION BY class) AS class_average
+FROM 
+    student_scores;
+
+student_name | score | overall_average | class_average
+-------------|-------|-----------------|--------------
+Alice        | 90    | 85              | 87.5
+Bob          | 85    | 85              | 87.5
+Charlie      | 80    | 85              | 82.5
+David        | 85    | 85              | 82.5
+*/
+

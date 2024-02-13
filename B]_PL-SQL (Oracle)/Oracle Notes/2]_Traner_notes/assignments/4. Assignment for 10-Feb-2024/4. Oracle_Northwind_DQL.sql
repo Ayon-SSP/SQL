@@ -233,15 +233,31 @@ FROM vwQuarterly_Orders_by_Product;
 -- 'America'= 'USA','Canada','Brazil' and 'Asia-Pacific'
 
 CREATE OR REPLACE VIEW vwUnitsInStock AS
-SELECT 
-  S.Country,
-  SUM(P.UnitsInStock) AS TotalUnitsInStock
-FROM Suppliers S
-LEFT JOIN Products P ON S.SupplierID = P.SupplierID
-GROUP BY S.Country;
+SELECT
+  SUM(P.unitsinstock) AS sumofunitprice,
+  DECODE(S.country,
+    'UK', 'EUROPE',
+    'Spain', 'EUROPE',
+    'Sweden', 'EUROPE',
+    'Germany', 'EUROPE',
+    'Norway', 'EUROPE',
+    'Denmark', 'EUROPE',
+    'Netherlands', 'EUROPE',
+    'Finland', 'EUROPE',
+    'Italy', 'EUROPE',
+    'France', 'EUROPE',
+    'USA', 'America',
+    'Canada', 'America',
+    'Brazil', 'America',
+    'Asia-Pacific') AS continent
+FROM products P
+INNER JOIN suppliers s ON P.supplierid = S.supplierid
+GROUP BY P.unitsinstock, S.country;
 
-SELECT *
+SELECT * 
 FROM vwUnitsInStock;
+
+
 
 -- 4. Display top 10 expensive products 
 CREATE OR REPLACE VIEW vw10Most_Expensive_Products AS

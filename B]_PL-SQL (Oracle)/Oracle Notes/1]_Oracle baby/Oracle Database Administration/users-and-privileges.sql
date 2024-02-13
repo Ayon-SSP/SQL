@@ -94,9 +94,9 @@ where username='SYSTEM' or username='MYUSER' or username='AYONSSP';
 
 
 
+GRANT ALL PRIVILEGES TO super;
 
-
-
+-- oracle docs Section 4: https://www.oracletutorial.com/oracle-administration/
 
 -- Create an user name "assignmentUser"
 alter session set "_ORACLE_SCRIPT"=true;
@@ -131,3 +131,12 @@ grant all PRIVILEGES to assignmentUser;
 grant connect to assignmentUser;
 grant RESOURCE to assignmentUser;
 grant dba to assignmentUser;
+
+
+GRANT SELECT ON table_name TO {user | role};
+
+ALTER USER username IDENTIFIED BY password ACCOUNT UNLOCK;
+
+
+SELECT * FROM DBA_USERS
+ORDER BY created DESC;

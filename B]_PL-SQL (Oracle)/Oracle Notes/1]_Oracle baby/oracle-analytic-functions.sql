@@ -17,8 +17,8 @@ or self-joins.
 
 */
 
--- RANK() OVER() - return the rank of a value in a group(rank skipps)
--- DENSE_RANK() - return the rank of a value in a group (no skipps)
+-- RANK() OVER() - return the rank of a value in a group(rank skipps) - 1, 2, 2, 4, 5
+-- DENSE_RANK() - return the rank of a value in a group (no skipps) - 1, 2, 2, 3, 4
 -- PERCENT_RANK() OVER () - return the percentile rank of a value in a group
 -- CUME_DIST() OVER () - return the cumulative distribution of a value in a group
 -- ROW_NUMBER() OVER () - return the sequential number of a row within a group
@@ -201,3 +201,114 @@ Charlie      | 80    | 85              | 82.5
 David        | 85    | 85              | 82.5
 */
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Examples:
+CREATE TABLE sales_data (
+    sales_rep VARCHAR2(50),
+    quarter VARCHAR2(10),
+    sales_amount NUMBER
+);
+
+INSERT INTO sales_data (sales_rep, quarter, sales_amount)
+VALUES ('John', 'Q1', 5000);
+
+INSERT INTO sales_data (sales_rep, quarter, sales_amount)
+VALUES ('Alice', 'Q1', 6000);
+
+INSERT INTO sales_data (sales_rep, quarter, sales_amount)
+VALUES ('Bob', 'Q1', 4500);
+
+
+INSERT INTO sales_data (sales_rep, quarter, sales_amount)
+VALUES ('John', 'Q2', 7000);
+
+INSERT INTO sales_data (sales_rep, quarter, sales_amount)
+VALUES ('Alice', 'Q2', 5500);
+
+INSERT INTO sales_data (sales_rep, quarter, sales_amount)
+VALUES ('Bob', 'Q2', 4800);
+
+INSERT INTO sales_data (sales_rep, quarter, sales_amount)
+VALUES ('John', 'Q3', 6200);
+
+INSERT INTO sales_data (sales_rep, quarter, sales_amount)
+VALUES ('Alice', 'Q3', 4800);
+
+INSERT INTO sales_data (sales_rep, quarter, sales_amount)
+VALUES ('Bob', 'Q3', 5100);
+
+INSERT INTO sales_data (sales_rep, quarter, sales_amount)
+VALUES ('John', 'Q4', 5500);
+
+INSERT INTO sales_data (sales_rep, quarter, sales_amount)
+VALUES ('Alice', 'Q4', 7200);
+
+INSERT INTO sales_data (sales_rep, quarter, sales_amount)
+VALUES ('Bob', 'Q4', 6000);
+
+select * from sales_data;
+
+
+
+--Q1. You want to categories your sales representative into different performance groups e.g. top_performer,average,dnm) based on their quarterly sales amount
+
+SELECT 
+    sales_rep,
+    quarter,
+    sales_amount,
+    NTILE(3) OVER (PARTITION BY quarter ORDER BY sales_amount DESC) AS performance_group
+FROM
+    sales_data
+ORDER BY quarter, performance_group;
+
+-- Q2. Assign a sequential row number to each quarter record
+SELECT 
+    sales_rep,
+    quarter,
+    sales_amount,
+    ROW_NUMBER() OVER (PARTITION BY quarter ORDER BY sales_amount DESC) AS row_num
+FROM
+    sales_data
+ORDER BY quarter, row_num;
+
+-- Q3. Rank Sales representative based on their sales amount within each quarter with gaps
+SELECT 
+    sales_rep,
+    quarter,
+    sales_amount,
+    RANK() OVER (PARTITION BY quarter ORDER BY sales_amount DESC) AS rank
+FROM
+    sales_data
+ORDER BY quarter, rank;
+
+-- Q4. Rank Sales representative based on their sales amount within each quarter without gaps
+SELECT 
+    sales_rep,
+    quarter,
+    sales_amount,
+    DENSE_RANK() OVER (PARTITION BY quarter ORDER BY sales_amount DESC) AS rank
+FROM
+    sales_data
+ORDER BY quarter, rank;
+-- Q5. Compare the sales amount of sales representative with the next quarters
+SELECT 
+    sales_rep,
+    quarter,
+    sales_amount,
+    LEAD(sales_amount, 1, 0) OVER (PARTITION BY sales_rep ORDER BY quarter) AS next_quarter_sales
+FROM
+    sales_data
+ORDER BY sales_rep, quarter;

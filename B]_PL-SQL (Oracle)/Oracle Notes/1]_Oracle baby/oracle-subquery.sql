@@ -55,6 +55,8 @@ WHERE
     employee_id IN(subquery)
     -<or>-
     employee_id IN(subquery)
+    -<or>-
+    (EMPLOYEE_ID, SALARY) INw(SELECT EMPLOYEE_ID, SALARY FROM EMPLOYEES WHERE SALARY > 10000)
 ORDER BY attrubutes;
 
 -- E) Oracle subquery with the EXISTS operator
@@ -70,3 +72,6 @@ FROM
     products
 WHERE
     list_price > ALL(subquery);
+
+
+-- `ROWNUM` <= 3" not supported in subqueries(ROWNUM works in main SELECT statements)

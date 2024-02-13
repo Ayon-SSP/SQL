@@ -444,3 +444,8 @@ ON Customers.CustomerID = Orders.CustomerID;
 
 -- SELECT *
 -- FROM vwQuarterly_Orders_by_Product;
+
+
+select * from suppliers;
+
+select * from PRODUCTS;

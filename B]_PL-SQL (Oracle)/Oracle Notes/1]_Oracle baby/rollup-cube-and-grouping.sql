@@ -11,7 +11,7 @@ GROUP BY deptno;
 
 
 SELECT deptno, SUM(sal), AVG(sal), MAX(sal)
-FROM emp
+FROM emp 
 GROUP BY ROLLUP(deptno);
 
 -- O/P

@@ -100,3 +100,4 @@ INSERT INTO Temp_number_demo VALUES (976314.478);
 
 SELECT * FROM Temp_number_demo;
 
+-- DATEDIFF()

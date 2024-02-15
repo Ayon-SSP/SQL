@@ -95,7 +95,7 @@ Then it gets the rows that have the same values in the common column
   (0 1 2) and (1 2 3 4) => (*all)  -> Inner JOIN else cross join
 */
 
--- SELF JOIN:
+-- SELF JOIN: 
 /*
 1. It is a regular join, but the table is joined with itself.
 2. It is used to join a table to itself as if the table were two tables, temporarily renaming at least one table in the SQL statement.
@@ -145,6 +145,36 @@ WHERE table2.department_id IS NULL;
 2. equality operator (=)
 */
 
--- SEMI JOIN: https://www.javatpoint.com/oracle-semi-join EXIST CONDITION
+-- SEMI JOIN: It's like asking "Does at least one match exist?" rather than "What are the matches?"
+/*
+| Employee_ID | Name     | Department |
+|-------------|----------|------------|
+| 1           | Alice    | Sales      |
+| 2           | Bob      | Marketing  |
+| 3           | Charlie  | Sales      |
+
+| Employee_ID | Sales_Amount |
+|-------------|--------------|
+| 1           | 5000         |
+| 3           | 7000         |
+
+*/
+
+SELECT *
+FROM Employees e
+WHERE EXISTS (
+    SELECT 1
+    FROM Sales s
+    WHERE e.Employee_ID = s.Employee_ID
+);
+
+
+/*
+| Employee_ID | Name   | Department |
+|-------------|--------|------------|
+| 1           | Alice  | Sales      |
+| 3           | Charlie| Sales      |
+*/
+
 
 -- INNER JOIN suppliers s USING (supplierid)

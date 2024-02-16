@@ -2,7 +2,7 @@ Learn Oracle PL/SQL [link](https://www.oracletutorial.com/getting-started/oracle
 
 ## 🧩🪛🧬🧮 Schema
 ![schema](https://www.oracletutorial.com/wp-content/uploads/2017/07/Oracle-Sample-Database.png)
-
+> More Examples [SQL Style Guide](../../../1]_SQL_Conventional/StyleGuide.md)
 
 
 ```Text

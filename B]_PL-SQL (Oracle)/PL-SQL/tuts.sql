@@ -19,6 +19,9 @@ Overview of PL/SQL:
         ...more-👇
 
 
+
+
+-- PL/SQL has two kinds of data types: scalar and composite
 PL/SQL - Delimiters: https://www.tutorialspoint.com/plsql/plsql_basic_syntax.htm
 PL/SQL - Data Types: https://www.tutorialspoint.com/plsql/plsql_data_types.htm
 Loops:(
@@ -36,6 +39,8 @@ string:(
 */
 
 -- small practices
+
+-- > Once you submit a PL/SQL block to the Oracle Database server, the PL/SQL engine collaborates with the SQL engine to compile and execute the code. PL/SQL engine runs the procedural elements while the SQL engine processes the SQL statements.
 
 
 
@@ -70,6 +75,13 @@ DECLARE
         emp_name VARCHAR2(50),
         emp_salary NUMBER
     );
+
+    -- add data in emp_rec
+    emp_rec.emp_id := 100;
+    emp_rec.emp_name := 'John Doe';
+    emp_rec.emp_salary := 50000.50;
+    -- display data
+    dbms_output.put_line(emp_rec.emp_id || ' ' || emp_rec.emp_name || ' ' || emp_rec.emp_salary);
     
     TYPE emp_id_list IS VARRAY(10) OF NUMBER;
     emp_ids emp_id_list := emp_id_list(101, 102, 103);
@@ -87,7 +99,7 @@ DECLARE
     v_empno emp.empno%TYPE; -- same as NUMBER(4)
 
     -- Subtypes (%ROWTYPE)
-    v_emp_rec emp%ROWTYPE; -- same as RECORD
+    v_emp_rec emp%ROWTYPE; -- same as RECORD  returns all columns of emp table
 
 
 
@@ -101,7 +113,8 @@ BEGIN
     introduction := ' Hello! I''m Ayon from Mastek.'; 
     
 
-    FOR i IN 1..10 LOOP -- or you can use 'REVERSE 1..10'
+    FOR i IN 1..10 
+    LOOP -- or you can use 'REVERSE 1..10'
         dbms_output.put_line(UPPER(greetings));
         dbms_output.put_line(LOWER(greetings));
         dbms_output.put_line(INITCAP(greetings));
@@ -166,12 +179,6 @@ BEGIN
     SELECT salary INTO v_salary -- or multiple variable like  || SELECT salary, name, id INTP v_salary, v_name, v_id ||
     FROM emp WHERE emp_id = 100;
 
-    
-
-
-    
-
-
 EXCEPTION
 
 END
@@ -182,7 +189,7 @@ END
 
 1. FOR Loop
 2. Cursors
-3. Scoping and more ...https://docs.oracle.com/cd/B10500_01/appdev.920/a96624/a_samps.html
+3. Scoping and more ...https://docs.oracle.com/cd/A97630_01/appdev.920/a96624/a_samps.htm
 */
 
 SET SERVEROUTPUT ON;

@@ -3737,6 +3737,21 @@ WHERE S.CompanyName = 'United Package';
 
 
 
+
+-- SELECT 
+--   Cust.CustomerID,
+--   Cust.CompanyName,
+--   LISTAGG(S.SupplierID, ', ') WITHIN GROUP (ORDER BY Cust.CustomerID) AS CustomerID,
+--   LISTAGG(S.CompanyName, ', ') WITHIN GROUP (ORDER BY Cust.CompanyName) AS CompanyName
+-- FROM customers Cust
+-- INNER JOIN Orders O ON Cust.CustomerID = O.CustomerID
+-- INNER JOIN Orderdetails OD ON O.OrderID = OD.OrderID
+-- INNER JOIN Products P ON OD.ProductID = P.ProductID
+-- INNER JOIN Suppliers S ON P.SupplierID = S.SupplierID
+-- GROUP BY (Cust.CustomerID, Cust.CompanyName); -- There is no customer name How to solve? ⚠️ Nor correct
+
+
+
 -- -- Oracle Minus: 
 -- Assignment: Write queries to find rows in one SELECT statement but not in another.
 -- 1. List customers not from the USA. 

@@ -64,7 +64,7 @@ case
    when sum(od.quantity * od.unitprice) >1000 then 'YES'
    else 'NO'
    end as sales_greater_than1000
-from categories c 
+from categories c   
 join  products p on p.categoryid =c.categoryid 
 join orderdetails  od on od.productid = p.productid
 group by 

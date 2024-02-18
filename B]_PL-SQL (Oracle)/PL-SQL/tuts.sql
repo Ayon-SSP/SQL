@@ -46,10 +46,10 @@ string:(
 
 
 
--- Bind Variable
+-- Bind Variable:  can declare any where.
 VARIABLE v_empno VARCHAR2(10);
 EXEC :v_empno := '100'; 
--- another way is ":v_empno := '100';" in the BEGIN END block
+-- to access ":v_empno := '100';" in the BEGIN END block
 -- AND display it using "dbms_output.put_line(:v_empno);" or using print command "print :v_empno;" or auto print SET AUTOPRINT ON;
 
 
@@ -590,3 +590,150 @@ BEGIN
     CLOSE c1;
 END;
 /
+
+
+-- variable_name datatype [NOT NULL] [:= initial_value];
+
+DECLARE
+    l_i NUMBER := 0;
+    l_j NUMBER := 0;
+BEGIN
+    <<outer_loop>>
+    LOOP
+        l_i := l_i + 1;
+        EXIT outer_loop WHEN l_i > 2;    
+        dbms_output.put_line('Outer counter ' || l_i);
+        
+        -- reset inner counter
+        l_j := 0;
+        <<inner_loop>> 
+        LOOP
+            l_j := l_j + 1;
+            EXIT inner_loop WHEN l_j > 3;
+            dbms_output.put_line(' Inner counter ' || l_j);
+        END LOOP inner_loop;
+    END LOOP outer_loop;
+END;
+/
+
+
+
+-- PL/SQL IF Statement
+IF condition_1 THEN
+  statements_1
+ELSIF condition_2 THEN
+  statements_2
+[ ELSIF condition_3 THEN
+    statements_3
+]
+...
+[ ELSE
+    else_statements
+]
+END IF;
+
+
+DECLARE
+  n_sales NUMBER := 300000;
+  n_commission NUMBER( 10, 2 ) := 0;
+BEGIN
+  IF n_sales > 200000 THEN
+    n_commission := n_sales * 0.1;
+  ELSIF n_sales <= 200000 AND n_sales > 100000 THEN 
+    n_commission := n_sales * 0.05;
+  ELSIF n_sales <= 100000 AND n_sales > 50000 THEN 
+    n_commission := n_sales * 0.03;
+  ELSE
+    n_commission := n_sales * 0.02;
+  END IF;
+END;
+/
+
+
+-- Simple PL/SQL CASE statement
+CASE selector
+WHEN selector_value_1 THEN
+    statements_1
+WHEN selector_value_1 THEN 
+    statement_2
+...
+ELSE
+    else_statements
+END CASE;
+
+-- PL/SQL GOTO Statement
+GOTO label_name;
+<<label_name>>;
+
+
+BEGIN
+  GOTO second_message;
+
+  <<first_message>>
+  DBMS_OUTPUT.PUT_LINE( 'Hello' );
+  GOTO the_end;
+
+  <<second_message>>
+  DBMS_OUTPUT.PUT_LINE( 'PL/SQL GOTO Demo' );
+  GOTO first_message;
+
+  <<the_end>>
+  DBMS_OUTPUT.PUT_LINE( 'and good bye...' );
+
+END;
+
+-- PL/SQL GOTO Demo
+-- Hello
+-- and good bye...
+
+
+
+-- loops
+<<label>> LOOP
+    statements;
+END LOOP loop_label;
+DECLARE
+  l_counter NUMBER := 0;
+BEGIN
+  LOOP
+    l_counter := l_counter + 1;
+    IF l_counter > 3 THEN
+      EXIT;
+    END IF;
+    dbms_output.put_line( 'Inside loop: ' || l_counter );
+  END LOOP;
+  -- control resumes here after EXIT
+  dbms_output.put_line( 'After loop: ' || l_counter );
+END;
+
+-- EXIT WHEN condition;
+
+DECLARE
+  l_i NUMBER := 0;
+  l_j NUMBER := 0;
+BEGIN
+  <<outer_loop>>
+  LOOP
+    l_i := l_i + 1;
+    EXIT outer_loop WHEN l_i > 2;    
+    dbms_output.put_line('Outer counter ' || l_i);
+    -- reset inner counter
+    l_j := 0;
+      <<inner_loop>> LOOP
+      l_j := l_j + 1;
+      EXIT inner_loop WHEN l_j > 3;
+      dbms_output.put_line(' Inner counter ' || l_j);
+    END LOOP inner_loop;
+  END LOOP outer_loop;
+END;
+
+
+
+
+
+
+
+
+
+
+

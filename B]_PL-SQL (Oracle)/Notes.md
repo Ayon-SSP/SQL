@@ -1,5 +1,5 @@
 
-
+- **SQL*Plus** is a command-line interface provided by Oracle for interacting with the Oracle Database. **PL/SQL** is a language used within SQL*Plus to write procedural code and interact with the database
 - **Dual :** DUAL is a table automatically created by Oracle Database along with the data dictionary. DUAL is in the schema of the user SYS but is accessible by the name DUAL to all users. It has one column, DUMMY , defined to be VARCHAR2(1) , and contains one row with a value X .
 #### **SYS & SYSTEM :** [sys-and-system-accounts-in-oracle-database](https://medium.com/@ykods/sys-and-system-accounts-in-oracle-database-6113c3a29765)
 1. **SYS:** `superuser` (system administrator account) && `highest level of privileges`
@@ -14,3 +14,5 @@
 
 
 - [data dictionary objects](https://chat.openai.com/c/5b7fc911-9988-4722-9648-2329b670400e): ALL_TABLES, ALL_TAB_COLUMNS, ALL_VIEWS, ALL_INDEXES, ALL_CONS_COLUMNS, ALL_CONSTRAINTS, ALL_TAB_PRIVS, ALL_SYNONYMS, DBA_OBJECTS, DBA_USERS.
+- [plsql-exception-propagation-example-3](https://www.oracletutorial.com/wp-content/uploads/2019/08/plsql-exception-propagation-example-3.png)
+- 

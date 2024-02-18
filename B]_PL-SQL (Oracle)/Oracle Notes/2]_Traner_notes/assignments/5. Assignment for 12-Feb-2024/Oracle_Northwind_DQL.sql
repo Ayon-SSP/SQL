@@ -1,3 +1,6 @@
+--Assignment_010   12-FEB-24 
+--SQL QUERIES 
+
 -- -- Oracle Union All
 -- Assignment: Write queries to combine the results of two or more SELECT statements, including duplicate rows.
 -- 1. List all customers from the USA and Canada.

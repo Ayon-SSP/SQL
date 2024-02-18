@@ -1,4 +1,4 @@
---Assignment_008   310-FEB-24 
+--Assignment   10-FEB-24 
 --SQL QUERIES 
 
 -- -- Q1. Write queries on Northwind db.

@@ -49,8 +49,11 @@ FROM Products
 GROUP BY SupplierID
 HAVING COUNT(ProductID) > 1;
 
+-- DROP TRIGGER hr_audit_trigger;
+
 -- 3. Create a function to get latest order date for entered customer_id (SQL)
-CREATE OR REPLACE FUNCTION get_latest_order_date(customer_id IN VARCHAR2) RETURN DATE
+CREATE OR REPLACE FUNCTION get_latest_order_date(customer_id IN VARCHAR2) 
+RETURN DATE
 AS
   latest_order_date DATE;
 BEGIN
@@ -81,22 +84,27 @@ SELECT
 FROM Products;
 
 -- 6. Rank customers by the total sales amount within each order date
-CREATE OR REPLACE FUNCTION get_order_total_sales(order_id IN NUMBER) RETURN NUMBER
-AS
-  total_sales NUMBER;
-BEGIN
-  SELECT SUM((UnitPrice * Quantity) * (1 - Discount)) INTO total_sales
-  FROM OrderDetails
-  WHERE OrderID = order_id;
-  RETURN total_sales;
-END;
+WITH get_customers_daily_sales AS (
+  SELECT 
+    C.CustomerID,
+    C.CompanyName,
+    O.OrderDate,
+    SUM((OD.Quantity * OD.UnitPrice) * (1 - OD.Discount)) AS total_sales
+  FROM Customers C
+  LEFT JOIN Orders O ON C.CustomerID = O.CustomerID
+  LEFT JOIN OrderDetails OD ON O.OrderID = OD.OrderID
+  GROUP BY GROUPING SETS((C.CustomerID, C.CompanyName, O.OrderDate))
+)
 
-SELECT
+SELECT 
   CustomerID,
+  CompanyName,
   OrderDate,
-  get_order_total_sales(OrderID) AS total_sales,
-  RANK() OVER (ORDER BY get_order_total_sales(OrderID) DESC) AS order_rank
-FROM Orders;
+  total_sales,
+  RANK() OVER (PARTITION BY OrderDate ORDER BY total_sales DESC) AS order_rank
+FROM get_customers_daily_sales;
+
+
 
 -- 7. For each order, calculate a subtotal for each Order (identified by OrderID).
 SELECT 
@@ -250,7 +258,7 @@ SELECT
     'Canada', 'America',
     'Brazil', 'America',
     'Asia-Pacific') AS continent
-FROM products P
+FROM Products P
 INNER JOIN suppliers s ON P.supplierid = S.supplierid
 GROUP BY P.unitsinstock, S.country;
 

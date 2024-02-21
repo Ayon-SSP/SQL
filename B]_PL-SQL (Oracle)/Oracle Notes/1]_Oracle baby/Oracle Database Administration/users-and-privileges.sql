@@ -140,3 +140,144 @@ ALTER USER username IDENTIFIED BY password ACCOUNT UNLOCK;
 
 SELECT * FROM DBA_USERS
 ORDER BY created DESC;
+
+
+
+
+
+
+SQLPLUS / AS SYSDBA
+step 1: Find the container name
+SHOW CON_NAME;
+
+CON_NAME
+------------------------------
+CDB$ROOT
+
+CDB -> Container Database (SYS, SYSTEM)
+PDB -> Pluggable Database (HR, OE, SH, AYONSSP) (user created database)
+
+COLUMN NAME FORMAT A20;
+TO get the CONTAINER ID
+	v$PDBS
+	COLUMN name FORMAT a20;
+	SELECT con_id, NAME FROM v$pdbs; --> WILL SHOW THE NAME AND THE CONTAINER ID OF ALL THE Pluggable Database (PDB)
+	SELECT CON_ID, NAME FROM V$CONTAINERS ORDER BY CON_ID;
+
+	SQL>    SELECT con_id, NAME FROM v$pdbs;
+
+			CON_ID NAME
+		---------- --------------------
+				2 PDB$SEED
+				3 XEPDB1   -> created during insrallation (user defined pluggable database)
+
+		SQL>    SELECT CON_ID, NAME FROM V$CONTAINERS ORDER BY CON_ID;
+
+			CON_ID NAME
+		---------- --------------------
+				1 CDB$ROOT
+				2 PDB$SEED -> by default create if you create a container
+				3 XEPDB1
+
+step 2: Find the service name.
+	- pluggable database shares the same name
+	V$Active_services -> to get the service name of XEPDB1 Container.
+		SELECT NAME, NETWORK_NAME, CON_ID FROM V$ACTIVE_SERVICES WHERE con_id = 3;
+
+		NAME       NETWORK_NAME           CON_ID
+		---------  ---------------------  ------
+		XEPDB1     XEPDB1                 3
+ -> service name is XEPDB1
+
+step 3: Create an entry in TNSNAMES.ORA file
+-- dude this is differente god please help me.
+
+
+-- DISCONNECT USER AND RECONNECT ANOTHER
+user -- -> returns the current user
+CONN HR/HR
+
+SHOW user;
+
+DISC;
+CONN hr/hr;
+-- connect with system user
+CONN system/321654@localhost:1521/xe
+CONN NORTHWIND_DB/321654@localhost:1521/xe
+-- login to ayonssp user
+CONNECT ayonssp/321654@localhost:1521/xe
+conn ayonssp/321654@localhost:1521/xepdb1
+
+
+PDB VS CDB: https://www.youtube.com/watch?v=msifGpn2QXo&pp=ygUWQ0RCICYgUERCIGluIG9yYWNsZSBkYg%3D%3D
+non-cdb -> non container database -- (can't convert it to container database)
+cdb -> container database  | cdb$root | -> it can host multiple pluggable database (pdb)
+	| cdb$root | -> | multiple other databases | using dbca
+					[hr, ayonssp, sap] > thease db are know as pdb
+			-> when we create a container pdb$seed is created by default
+		
+		-> how to create pdb s you can copy the default pdb$seed and create a new pdb 
+		-<or>-
+			or it is reduced to one command [DB cloning = 1line/command]
+		
+		what is pdb?
+	|    | -> it's a normal db you can shutdown and startup can create user and all the stuff
+				every user/schema is independent of each other cant access other's users data but (cdb admin) -<or>- sys admin can access all the data
+				| cdb$root | -> | hr, system, pdb$seed, ayonssp| pdb's are (hr, sap, ...) are the admins of there own db and every db has there own sysdba
+									each pdb's has there own users like ayonssp or application users who connect to the db
+
+
+
+
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+PS C:\Users\admin> sqlplus system/321654@//localhost:1521/xepdb1 -- no hr user
+
+SQL*Plus: Release 21.0.0.0.0 - Production on Wed Feb 21 19:52:42 2024
+Version 21.3.0.0.0
+
+Copyright (c) 1982, 2021, Oracle.  All rights reserved.
+
+Last Successful login time: Wed Feb 21 2024 19:50:49 +05:30
+
+Connected to:
+Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
+Version 21.3.0.0.0
+
+SQL>
+
+system -> all administrative privileges,
+
+sys -> more strong thant sys
+	sql> sqlplus sys as sysdba
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+PS C:\Users\admin> sqlplus sys as sysdba
+
+SQL*Plus: Release 21.0.0.0.0 - Production on Wed Feb 21 20:07:25 2024
+Version 21.3.0.0.0
+
+Copyright (c) 1982, 2021, Oracle.  All rights reserved.
+
+Enter password:
+
+Connected to:
+Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
+Version 21.3.0.0.0
+
+SQL>
+
+
+-<or>- sqlplus sys/password@//localhost:1521/service_name as sysdba
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+CREATE TABLE whoami(
+	name VARCHAR2(20)
+);
+
+ALTER TABLE whoami MODIFY name VARCHAR2(100) NOT NULL;
+
+INSERT INTO whoami VALUES('sys as sysdba');
+INSERT INTO whoami VALUES('sqlplus system/321654@//localhost:1521/xepdb1');

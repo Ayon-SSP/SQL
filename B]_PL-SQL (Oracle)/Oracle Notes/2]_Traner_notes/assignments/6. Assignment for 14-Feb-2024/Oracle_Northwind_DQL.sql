@@ -187,6 +187,14 @@ PIVOT(
   )
 )
 ORDER BY CategoryName;
+-- PIVOT(
+--   SUM(quantity_sum)
+--   FOR CategoryName IN (
+--     'Beverages',
+--     'Condiments'
+--   )
+-- )
+-- ORDER BY ORDER_MONTH;
 
 -- 13. Count the total number of orders for each shipper and country
 WITH cnt_com_ordercount AS (

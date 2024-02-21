@@ -1,4 +1,11 @@
 
+
+- all the high privileged users like SYS, SYSTEM were placed inside the container databaswe and other schemas like HR, OE, SH were placed inside the pluggable database.
+- - In Oracle Database, a pluggable database (PDB) is a self-contained database unit within a larger container database (CDB)
+- 
+- 
+- A **schema** is a collection of database objects. A **schema is owned by a database user** and has the **same name** as that user. Schema objects are logical structures created by users. **Objects such as tables or indexes hold data**, or can consist of a definition only, such as a view or synonym.
+
 - **SQL*Plus** is a command-line interface provided by Oracle for interacting with the Oracle Database. **PL/SQL** is a language used within SQL*Plus to write procedural code and interact with the database
 - **Dual :** DUAL is a table automatically created by Oracle Database along with the data dictionary. DUAL is in the schema of the user SYS but is accessible by the name DUAL to all users. It has one column, DUMMY , defined to be VARCHAR2(1) , and contains one row with a value X .
 #### **SYS & SYSTEM :** [sys-and-system-accounts-in-oracle-database](https://medium.com/@ykods/sys-and-system-accounts-in-oracle-database-6113c3a29765)

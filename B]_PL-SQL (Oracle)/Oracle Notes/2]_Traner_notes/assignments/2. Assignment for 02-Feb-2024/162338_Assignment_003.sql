@@ -1,5 +1,5 @@
 --Assignment_003   2-FEB-24
--- ADD RECORDS
+-- ADD RECORDS: https://www.geeksengine.com/database/problem-solving/northwind-queries-part-2.php
 
 -- product_info
 -- product_id(pk)	product_desc	product_price

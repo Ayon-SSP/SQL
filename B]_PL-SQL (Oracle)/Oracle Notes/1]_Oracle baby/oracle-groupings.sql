@@ -38,8 +38,6 @@ GROUP BY GROUPING SETS ((Region, Product), (Region), ());
 
 */
 
-
-
 CREATE TABLE sales (
     region VARCHAR2(50),
     product VARCHAR2(50),
@@ -244,19 +242,32 @@ PIVOT (
     )
 );
 
+
 SELECT *
 FROM (
-    SELECT Employee, Month, Sales
-    FROM employee_sales
+    SELECT *
+    FROM (
+        SELECT Employee, Month, Sales
+        FROM employee_sales
+    )
+    PIVOT (
+        COUNT(Sales)
+        FOR Month IN (
+            'January' AS Jan,
+            'February' AS Feb,
+            'March' AS Mar
+        )
+    )
 )
-PIVOT (
-    COUNT(Sales)
-    FOR Month IN (
-        'January',
-        'February',
-        'March'
+UNPIVOT (
+    sales
+    for monthesin in (
+        Jan,
+        Feb,
+        Mar
     )
 );
+
 
 -- UNPIVOT – a guide to rotating columns into rows.
 /*
@@ -291,7 +302,7 @@ SELECT *
 FROM employee_sales_vw
 UNPIVOT (
     sales 
-    FOR month IN (Jan_Sales, Feb_Sales, Mar_Sales)
+    FOR month_sales IN (Jan_Sales, Feb_Sales, Mar_Sales)
 );
 
 

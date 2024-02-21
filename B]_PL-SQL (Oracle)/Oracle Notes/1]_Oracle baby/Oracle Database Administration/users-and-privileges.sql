@@ -274,10 +274,12 @@ SQL>
 
 
 CREATE TABLE whoami(
-	name VARCHAR2(20)
+	name VARCHAR2(100)
 );
-
-ALTER TABLE whoami MODIFY name VARCHAR2(100) NOT NULL;
 
 INSERT INTO whoami VALUES('sys as sysdba');
 INSERT INTO whoami VALUES('sqlplus system/321654@//localhost:1521/xepdb1');
+INSERT INTO whoami VALUES('sqlplus northwind_schema/321654@//localhost:1521/xepdb1');
+INSERT INTO whoami VALUES('sqlplus ayonssp/321654@//localhost:1521/xepdb1');
+
+conn ayonssp/321654@//localhost:1521/xepdb1

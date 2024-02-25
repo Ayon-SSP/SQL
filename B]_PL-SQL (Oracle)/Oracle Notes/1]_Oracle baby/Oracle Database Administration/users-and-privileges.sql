@@ -192,6 +192,13 @@ step 2: Find the service name.
 step 3: Create an entry in TNSNAMES.ORA file
 -- dude this is differente god please help me.
 
+sqlplus OT@PDBORCL
+
+SQL>@path_to_sql_file
+SQL>@c:\dbsample\ot_schema.sql
+
+-- display all table_name of a user/schema
+SELECT table_name FROM user_tables ORDER BY table_name;
 
 -- DISCONNECT USER AND RECONNECT ANOTHER
 user -- -> returns the current user
@@ -207,7 +214,7 @@ CONN NORTHWIND_DB/321654@localhost:1521/xe
 -- login to ayonssp user
 CONNECT ayonssp/321654@localhost:1521/xe
 conn ayonssp/321654@localhost:1521/xepdb1
-
+SQL> EXIT
 
 PDB VS CDB: https://www.youtube.com/watch?v=msifGpn2QXo&pp=ygUWQ0RCICYgUERCIGluIG9yYWNsZSBkYg%3D%3D
 non-cdb -> non container database -- (can't convert it to container database)

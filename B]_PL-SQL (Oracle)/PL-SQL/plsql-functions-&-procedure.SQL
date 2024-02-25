@@ -1,82 +1,88 @@
--- PL/SQL Functions
+-- PL/SQL subprograms or subroutines: 
 /*
-Types of subroutines or say sub-programs:
-    1. PL/SQL Functions
-    2. PL/SQL Procedures
--- PL/SQL Functions In Oracle Database
-    Pass-by-Value Functions and
-    Pass-by-Reference functions
-
-Restrictions on calling a function
-    Multiple DML does not allow in a function.
-    - dIFF: https://www.tutorialspoint.com/what-are-the-differences-between-stored-procedures-and-functions
-    - always returns a single value.
-PL/SQL Stored Procedure
-    - IN, OUT, or INOUT
-    - can have input/output parameters
-    - AUTHID Clause:
-        The AUTHID clause is used for setting the authority model for the PL/SQL Procedures. This clause has two flags.
-            1. DEFINER and
-            2. CURRENT_USER
-
-Functions:	                                        Procedures:
-A function has a return type and returns a value.	A procedure does not have a return type. But it returns values using the OUT parameters.
-You cannot use a function with Data Manipulation queries. Only Select queries are allowed in functions.	You can use DML queries such as insert, update, select etc… with procedures.
-A function does not allow output parameters	A procedure allows both input and output parameters.
-You cannot manage transactions inside a function.	You can manage transactions inside a procedure.
-You cannot call stored procedures from a function	You can call a function from a stored procedure.
-You can call a function using a select statement.	You cannot call a procedure using select statements.
-
-- PL/SQL procedure parameters can have one of three possible modes: IN, OUT, or IN OUT.
-
+* A subprogram can be created:
+*     - At the schema level
+*     - Inside a package
+*     - Inside a PL/SQL block
+* 
+* PL/SQL sub-programs: subprogram is a standalone subprogram `program unit/module that performs a particular task` and can be deleted with the DROP PROCEDURE
+*     1. PL/SQL [Stored] Procedures − These subprograms do not return a value directly; mainly used to perform an action.
+*     2. PL/SQL Functions − These subprograms return a single value; mainly used to compute and return a value.
+* 
+*     Parts of a PL/SQL Subprogram:
+*         1. Declaration Part
+*         2. Execution Part: statements that perform the designated action.
+*         3. Exception Part
+*
+*PL/SQL Procedures:
+*    A stored procedure in PL/SQL is nothing but a `series of declarative SQL statements which can be stored in the database catalogue`
+*
+*`Parameter Modes` in PL/SQL Subprograms
+*    1. IN Mode or Default Mode: The IN mode is the default mode. It is `used to pass values to the subprogram`.
+*    2. OUT Mode: The OUT mode is used to `output values from the subprogram to the caller`.
+*    3. IN OUT Mode: The IN OUT mode is `used to pass values to the subprogram and output values from the subprogram` to the caller.
+*
+*
+*PL/SQL Methods for Passing Parameters or Types of `Calling Notations` for Subroutines:
+*    1. Positional Notation: my_procedure(10, 1.1, 'SomeString'); -> sequence, values, parameter's
+*    2. Named Notation: my_procedure(dep_id => 10, sal_raise => 1.1, emp_name => 'SomeString');
+*    3. Mixed calling notation: my_procedure(dep_id => 10, 1.1, 'SomeString');
+*
+*Functions:
+*    Functions are designed to return a single value and must return.
+*    Not allow output parameters
+*    Functions can be used in `SQL queries` wherever an expression can be used.
+*    They are `invoked` by selecting them as part of an expression.
+*Procedures:
+*    Procedures are used to perform an `action or a series of actions`.
+*    They can have input parameters, output parameters, or both.
+*    Procedures do `not` have to `return any value` explicitly.
+*    They are invoked using the `CALL` or `EXECUTE` statement.
+*    Procedures `cannot` be called directly within `SQL queries`.
 */
 
-
-
-
--- Calling Notation for PL/SQL Subroutines https://www.rebellionrider.com/calling-notation-for-pl-sql-subroutines-in-oracle-database/
-/*
-
-
-Types of Calling Notations for Subroutines
-    - In Oracle PL/SQL there are 3 types of calling notations. These are:
-
-    1. Positional Notation: my_procedure(10, 1.1, 'SomeString');
-    2. Named Notation: my_procedure(dep_id => 10, sal_raise => 1.1, emp_name => 'SomeString');
-    3. Mixed calling notation: my_procedure(dep_id => 10, 1.1, 'SomeString');
-*/
-
-
-
-
-
-CREATE [OR REPLACE] FUNCTION function_name
-(Parameter 1, Parameter 2…)
-RETURN datatype
-IS
-	Declare variable, constant etc.  
+-- PL/SQL Procedures
+-- basic syntax
+CREATE [OR REPLACE] PROCEDURE procedure_name (parameter_list)     
+IS/AS
+    [declaration statements]
 BEGIN
-	Executable Statements
-	Return (Return Value);
+    [execution statements]
+EXCEPTION
+    [exception handler]
+END [procedure_name];
+
+SET SERVEROUTPUT ON;
+
+-- Parts of a PL/SQL Subprogram, Parameter Modes, Calling Notations
+CREATE OR REPLACE PROCEDURE example_procedure (
+    p_in_default_param IN NUMBER DEFAULT 5,
+    p_in_param IN NUMBER,
+    p_out_param OUT NUMBER,
+    p_inout_param IN OUT NUMBER
+) IS 
+BEGIN
+    -- Assign a value to the `OUT` parameter
+    p_out_param := p_in_param * p_in_default_param;
+
+    -- Modify the `IN OUT` parameter
+    p_inout_param := p_inout_param * 2;
+
 END;
 /
 
--- Example of a function to calculating the area of a circle
-
-CREATE OR REPLACE FUNCTION area_of_circle
-    (p_radius NUMBER := 1)
-RETURN NUMBER
-IS
-    pi CONSTANT NUMBER(7, 3) := 3.141;
-    area NUMBER(7, 3);
+DECLARE
+    v_out_param NUMBER;
+    v_inout_param NUMBER := 10;
 BEGIN
-    area := pi * (p_radius * p_radius);
-    RETURN area;
-END;
-/
-
-BEGIN
-    DBMS_OUTPUT.PUT_LINE('Area of circle with radius 5: ' || area_of_circle(5));
+    example_procedure (
+        -- p_in_default_param => 2, 
+        p_in_param => 5, 
+        p_out_param => v_out_param, 
+        p_inout_param => v_inout_param
+    );
+    DBMS_OUTPUT.PUT_LINE('OUT Parameter Value: ' || v_out_param);
+    DBMS_OUTPUT.PUT_LINE('IN OUT Parameter Value: ' || v_inout_param);
 END;
 /
 
@@ -116,34 +122,28 @@ END;
 
 
 
+-- PL/SQL Functions
+-- Example of a function to calculating the area of a circle
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--- PL/SQL Procedure
-CREATE [OR REPLACE ] PROCEDURE procedure_name (parameter_list)     
+CREATE OR REPLACE FUNCTION area_of_circle
+    (p_radius NUMBER := 1)  
+RETURN NUMBER
 IS
-    [declaration statements]
+    pi CONSTANT NUMBER(7, 3) := 3.141;
+    area NUMBER(7, 3);
+BEGIN
+    area := pi * (p_radius * p_radius);
+    RETURN area;
+END;
+/
 
 BEGIN
-    [execution statements]
+    DBMS_OUTPUT.PUT_LINE('Area of circle with radius 5: ' || area_of_circle(5));
+END;
+/
 
-EXCEPTION
 
-    [exception handler]
-END [procedure_name ];
+
 
 -- Example 1:
 CREATE OR REPLACE PROCEDURE calculate_department_salary (
@@ -178,41 +178,46 @@ BEGIN
 END;
 /
 
+select deptno, COUNT(ename)
+from emp
+group by deptno;
 
+
+
+
+
+-- this is a complete example of procedure
+--  Parts of a PL/SQL Subprogram, Parameter Modes, Calling Notations
 CREATE OR REPLACE PROCEDURE example_procedure (
+    p_in_default_param IN NUMBER DEFAULT 5,
     p_in_param IN NUMBER,
     p_out_param OUT NUMBER,
     p_inout_param IN OUT NUMBER
-) IS
+) IS 
 BEGIN
-    -- Modify the IN OUT parameter
+    -- Assign a value to the `OUT` parameter
+    p_out_param := p_in_param * p_in_default_param;
+
+    -- Modify the `IN OUT` parameter
     p_inout_param := p_inout_param * 2;
 
-    -- Assign a value to the OUT parameter
-    p_out_param := p_in_param * 10;
 END;
 /
 
 DECLARE
-    v_in_param NUMBER := 5;
     v_out_param NUMBER;
     v_inout_param NUMBER := 10;
 BEGIN
-    example_procedure(v_in_param, v_out_param, v_inout_param);
+    example_procedure (
+        -- p_in_default_param => 2, 
+        p_in_param => 5, 
+        p_out_param => v_out_param, 
+        p_inout_param => v_inout_param
+    );
     DBMS_OUTPUT.PUT_LINE('OUT Parameter Value: ' || v_out_param);
     DBMS_OUTPUT.PUT_LINE('IN OUT Parameter Value: ' || v_inout_param);
 END;
 /
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -272,9 +277,9 @@ select * from emp;
 
 create or replace procedure prc_separateEmpByJob
 (
-p_job in emp.job%type,
-p_empCursor out SYS_REFCURSOR,
-p_totalSalary out emp.sal%type
+    p_job in emp.job%type,
+    p_empCursor out SYS_REFCURSOR,
+    p_totalSalary out emp.sal%type
 )
 is
 begin

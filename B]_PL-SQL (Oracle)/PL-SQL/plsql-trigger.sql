@@ -15,7 +15,6 @@ summerised:
     4. A USER Event (login and logout)
     5. A Compound Trigger (multiple triggers on a single table)
 
-
 -- user -> returns the current user
 */
 
@@ -50,7 +49,7 @@ END;
 
 -- Oracle Statement-level Triggers
 CREATE [OR REPLACE] TRIGGER trigger_name
-    {BEFORE | AFTER } triggering_event ON table_name
+    {BEFORE | AFTER } triggering_event ON table_name/SCHEMA/DATABASE
     [FOLLOWS | PRECEDES another_trigger]
     [ENABLE / DISABLE ]
     [WHEN condition]
@@ -62,7 +61,7 @@ EXCEPTION
     exception_handling statements
 END;
 
--- Eg: Monkay is holeday if insert on monday then error Exception
+-- Eg: Monday is holeday if insert on monday then error Exception
 -- For example, if you update 1000 rows in a table, then a statement-level trigger on that table would only be executed once. 
 
 CREATE OR REPLACE TRIGGER customers_credit_trg
@@ -85,7 +84,7 @@ SET SERVEROUTPUT ON;
 
 -- DROP TABLE superheroesTABLE;
 CREATE TABLE superheroesTABLE (
-    sh_name VARCHAR2 (15)
+    sh_name VARCHAR2 (200)
 );   
 
 -- DROP TRIGGER biss_Superheroes;
@@ -94,7 +93,7 @@ BEFORE INSERT ON superheroesTABLE
 FOR EACH ROW
 ENABLE
 DECLARE
-    v_user  VARCHAR2 (15);
+    v_user  VARCHAR2 (200);
 BEGIN
     SELECT user INTO v_user FROM dual;
     DBMS_OUTPUT.PUT_LINE('You Just Inserted a Row Mr.'|| v_user); 
@@ -109,7 +108,7 @@ BEFORE UPDATE ON superheroes
 FOR EACH ROW
 ENABLE
 DECLARE
-    v_user  VARCHAR2 (15);
+    v_user  VARCHAR2 (200);
 BEGIN
     SELECT user INTO v_user FROM dual;
     DBMS_OUTPUT.PUT_LINE('You Just Updated a Row Mr.'|| v_user); 
@@ -126,7 +125,7 @@ BEFORE DELETE ON superheroes
 FOR EACH ROW
 ENABLE
 DECLARE
-    v_user  VARCHAR2 (15);
+    v_user  VARCHAR2 (200);
 BEGIN
     SELECT user INTO v_user FROM dual;
     DBMS_OUTPUT.PUT_LINE('You Just Deleted a Row Mr.'|| v_user); 
@@ -141,7 +140,7 @@ BEFORE INSERT OR DELETE OR UPDATE ON superheroes
 FOR EACH ROW
 ENABLE
 DECLARE
-    v_user  VARCHAR2(15);
+    v_user  VARCHAR2(200);
 BEGIN
     SELECT user INTO v_user FROM dual;
     IF INSERTING THEN
@@ -163,11 +162,11 @@ DELETE FROM superheroes WHERE sh_name = 'Superman';
 
 -- Table Auditing
 CREATE TABLE sh_audit(
-    new_name varchar2(30),
-    old_name varchar2(30),
-    user_name varchar2(30),
-    entry_date varchar2(30),
-    operation  varchar2(30)
+    new_name varchar2(300),
+    old_name varchar2(300),
+    user_name varchar2(300),
+    entry_date varchar2(300),
+    operation  varchar2(300)
 );
 
 CREATE OR REPLACE TRIGGER superheroes_audit
@@ -175,8 +174,8 @@ BEFORE INSERT OR DELETE OR UPDATE ON superheroes
 FOR EACH ROW
 ENABLE
 DECLARE
-    v_user varchar2(30);
-    v_date varchar2(30);
+    v_user varchar2(300);
+    v_date varchar2(300);
 BEGIN
     SELECT user, TO_CHAR(sysdate, 'DD/MON/YYYY HH24:MI:SS') INTO v_user, v_date FROM dual;
     IF INSERTING THEN
@@ -207,7 +206,7 @@ SELECT * FROM sh_audit;
 -- Create Synchronized Table Backup Using DML Trigger In Oracle PL/SQL
 DROP TABLE superheroes;
 CREATE TABLE superheroes (
-    Sh_name VARCHAR2(30)
+    Sh_name VARCHAR2(300)
 );
 
 CREATE TABLE superheroes_backup AS SELECT * FROM superheroes WHERE 1=2;
@@ -239,10 +238,10 @@ SELECT * FROM superheroes;
 -- DDL Triggers
 CREATE TABLE schema_audit(
     ddl_date       DATE,
-    ddl_user       VARCHAR2(15),
-    object_created VARCHAR2(15),
-    object_name    VARCHAR2(15),
-    ddl_operation  VARCHAR2(15)
+    ddl_user       VARCHAR2(200),
+    object_created VARCHAR2(200),
+    object_name    VARCHAR2(200),
+    ddl_operation  VARCHAR2(200)
 );
 
 -- Save the DDL operation in the schema_audit table on schema level and on the database level>
@@ -261,7 +260,7 @@ END;
 CREATE TABLE test_audit(r_no NUMBER);
 
 ALTER TABLE test_audit
-ADD st_name VARCHAR2(30);
+ADD st_name VARCHAR2(300);
 
 INSERT INTO test_audit VALUES (1, 'Ironman');
 
@@ -287,11 +286,11 @@ Types of Database Event Triggers.
 
 CREATE TABLE hr_evnt_audit
 (
-    event_type   VARCHAR2(30),
+    event_type   VARCHAR2(300),
     logon_date   DATE,
-    logon_time   VARCHAR2(15),
+    logon_time   VARCHAR2(300),
     logof_date   DATE,
-    logof_time   VARCHAR2(15)
+    logof_time   VARCHAR2(300)
 );
 
 CREATE OR REPLACE TRIGGER hr_lgon_audit
@@ -343,11 +342,11 @@ SHOW user;
 -- Restriction on Instead-of View: 
 
 CREATE TABLE trainer(
-    full_name VARCHAR2(20)
+    full_name VARCHAR2(300)
 );
 
 CREATE TABLE subject(
-    subject_name VARCHAR2(15)
+    subject_name VARCHAR2(300)
 );
 
 INSERT INTO trainer VALUES ('Manish Sharma');
@@ -447,7 +446,6 @@ commit;
 drop trigger NORTHWIND_DB.hr_audit_trigger;
 
 ALTER TRIGGER HR_AUDIT_TR DISABLE;
-
 
 
 DECLARE

@@ -88,8 +88,9 @@ BEGIN
         -- update credit for the current customer
         UPDATE customers
         SET credit_limit = 
-            CASE WHEN l_budget > r_sales.credit THEN r_sales.credit 
-                     ELSE l_budget
+            CASE 
+                WHEN l_budget > r_sales.credit THEN r_sales.credit 
+                ELSE l_budget
             END
         WHERE customer_id = r_sales.customer_id;
 
@@ -106,13 +107,6 @@ BEGIN
     CLOSE c_sales;
 END;
 -- END: ed8c6549bwf9
-
-
-
-
-
-
-
 
 
 
@@ -165,16 +159,6 @@ DECLARE
 var1 rv_dept;
 
 
-
-
-
-
-
-
-
-
-
-
 /*
 ERROR 
 	-> SYNTAX ERROR -> WE MISSED SOMETHING IN SYNTAX WHICH IS CAUGHT DURING COMPILATION 
@@ -222,7 +206,7 @@ REF_CURSOR->C_DEPT -> ALL RECORDS / OPERATIONS ON C_EMP
 V_N NUMBER => NUMBER 
  
  TYPE customer_t IS REF CURSOR RETURN customers%ROWTYPE; 
- We are creating a cursor varialbe caleld customer_t which will work on records from customers%rowtype
+ We are creating a cursor varialbe called customer_t which will work on records from customers%rowtype
  customer_t will always store the records from customers%rowtype;
 Explicitly you are creating your own cursor variable to create a cursor which will work on customer data 
  1. Declare the cursor variable ref cursor 
@@ -254,6 +238,12 @@ SYS_REFCURSOR
 		c. when you want to use cursor on different type records then use SysRefCursor 
 		
 
+Both types are useful in different scenarios, with REF CURSOR providing more static definition of the result set structure and SYS_REFCURSOR offering more flexibility for dynamic result sets.
+
+
+
+
+
 
 
 Practice many questions on queries -> use these queries to practice with
@@ -261,7 +251,26 @@ for loop cursor using ref cursor on particular type of data
 */
 
 
--- TODO: COMPLET THE TOPIC
+-- REF CURSOR:(structure is defined)(week cursor) REF CURSOR is a cursor variable whose structure is defined at declaration time. It is typically used as a formal parameter in stored procedures or functions.
+CREATE OR REPLACE PROCEDURE get_employee_data (emp_cursor OUT SYS_REFCURSOR) IS
+BEGIN
+    OPEN emp_cursor FOR
+        SELECT employee_id, first_name, last_name
+        FROM employees;
+END;
+
+
+-- SYS_REFCURSOR:(week cursor) SYS_REFCURSOR is a cursor variable whose structure is defined dynamically at runtime. It is used within PL/SQL blocks and can also be returned as an OUT parameter from stored procedures or functions.
+DECLARE
+    emp_cursor SYS_REFCURSOR;
+BEGIN
+    OPEN emp_cursor FOR
+        SELECT employee_id, first_name, last_name
+        FROM employees;
+    -- Use the cursor variable emp_cursor as needed
+END;
+
+
 -- PL/SQL Cursor Variables with REF CURSOR
 DECLARE
     TYPE customer_t IS REF CURSOR RETURN customers%ROWTYPE;
@@ -334,8 +343,52 @@ END;
 
 
 
+-- Example
+CREATE OR REPLACE FUNCTION get_direct_reports(
+    in_manager_id IN employees.manager_id%TYPE)
+    RETURN SYS_REFCURSOR
+AS
+    c_direct_reports SYS_REFCURSOR;
+BEGIN
 
+    OPEN c_direct_reports FOR
+        SELECT
+            employee_id,
+            first_name,
+            last_name,
+            email
+        FROM
+            employees
+        WHERE
+            manager_id = in_manager_id
+        ORDER BY
+            first_name,
+            last_name;
 
+    RETURN c_direct_reports;
+END;
 
+DECLARE
+    c_direct_reports SYS_REFCURSOR;
+    l_employee_id employees.employee_id%TYPE;
+    l_first_name employees.first_name%TYPE;
+    l_last_name employees.last_name%TYPE;
+    l_email employees.email%TYPE;
+BEGIN
+    -- get the ref cursor from function
+    c_direct_reports := get_direct_reports(46);
 
--- PL/SQL Calling Notation
+    -- process each employee
+    LOOP
+        FETCH c_direct_reports
+        INTO l_employee_id,
+            l_first_name,
+            l_last_name,
+            l_email;
+        EXIT WHEN c_direct_reports%notfound;
+        dbms_output.put_line(l_first_name || ' ' || l_last_name || ' - ' || l_email);
+    END LOOP;
+    -- close the cursor
+    CLOSE c_direct_reports;
+END;
+/

@@ -5,7 +5,18 @@ ADD_MONTHS	ADD_MONTHS( DATE '2016-02-29', 1 )	     31-MAR-16	                 Ad
 LAST_DAY    LAST_DAY( DATE '2016-02-29' )	         29-FEB-16	                 Return the last day of the month for a date.
 TO_CHAR	    TO_CHAR( DATE'2017-01-01', 'DL' )	     Sunday, January 01, 2017	Convert a DATE or an INTERVAL value to a character string in a specified format.
 TO_DATE	    TO_DATE( '01 Jan 2017', 'DD MON YYYY' )	 01-JAN-17	                Convert a date which is in the character string to a DATE value.
+NEXT_DAY  NEXT_DAY( DATE '2017-01-01', 'MONDAY' )	 02-JAN-17	                Return the date of the next specified day of the week that comes after a date.
 TRUNC	    TRUNC(DATE '2017-07-16', 'MM')	         01-JUL-17	                Return a date truncated to a specific unit of measure.
+CURRENT_DATE	RETURN the current data format '06-AUG-2017 19:43:44'
+CURRENT_TIMESTAMP  ->  '06-AUG-17 08.26.52.742000000 PM -07:00'
+DBTIMEZONE 	  ->   -07:00
+EXTRACT EXTRACT(YEAR FROM SYSDATE)  ->	 2017
+MONTHS_BETWEEN   MONTHS_BETWEEN( DATE '2017-07-01', DATE '2017-01-01' ) -> 6
+
+
+
+
+
 
 
 SELECT ADD_MONTHS(SYSDATE, 1) AS project_due_date FROM dual;

@@ -269,6 +269,57 @@ UNPIVOT (
 );
 
 
+
+
+-- https://www.oracletutorial.com/oracle-basics/oracle-pivot/
+SELECT * FROM order_stats
+PIVOT(
+    COUNT(order_id) orders,
+    SUM(order_value) sales
+    FOR category_name
+    IN ( 
+        'CPU' CPU,
+        'Video Card' VideoCard, 
+        'Mother Board' MotherBoard,
+        'Storage' Storage
+    )
+)
+ORDER BY status;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 -- UNPIVOT – a guide to rotating columns into rows.
 /*
 | Employee | Jan_Sales | Feb_Sales | Mar_Sales |

@@ -12,3 +12,6 @@ Assignments:
         b. 162338_nex1_practice_31Jan24.sql
         c. 162338_nex2_practice1_31Jan24.sql
 ```
+
+
+

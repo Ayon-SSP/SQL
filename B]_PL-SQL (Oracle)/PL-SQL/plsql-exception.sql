@@ -1,4 +1,4 @@
-
+-- `SQLERRM`(sql_error_message) is a function that returns the error message associated with the most recent SQL error that occurred in the current session.
 
 BEGIN
     -- executable section
@@ -66,11 +66,11 @@ When an exception occurs,
 
 DECLARE
     e1 EXCEPTION;
-    PRAGMA exception_init (e1, -20001);
+        PRAGMA exception_init (e1, -20001);
     e2 EXCEPTION;
-    PRAGMA exception_init (e2, -20002);
+        PRAGMA exception_init (e2, -20002);
     e3 EXCEPTION;
-    PRAGMA exception_init (e2, -20003);
+        PRAGMA exception_init (e2, -20003);
     l_input NUMBER := &input_number;
 BEGIN
     -- inner block
@@ -95,7 +95,7 @@ END;
 /
 
 
--- [plsql-exception-propagation-example-1.png](https://www.oracletutorial.com/wp-content/uploads/2019/08/plsql-exception-propagation-example-1.png)
+-- [plsql-exception-propagation-example-1.png](https://www.oracletutorial.com/wp-content/uploads/2019/08/plsql-exception-propagation-example-3.png)
 
 -- never directly enter the datatypes like NUMBER, insted know the datatype of the column and use that datatype
 
@@ -138,18 +138,6 @@ BEGIN
 
 END;
 /
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 -- -- Reraising the current exception
@@ -212,7 +200,7 @@ END;
 
 
 
--- -- -- -- Oracle RAISE_APPLICATION_ERROR:
+-- -- -- -- Oracle RAISE_APPLICATION_ERROR: direct raise
 /*
         comes under userdefine exception.
 

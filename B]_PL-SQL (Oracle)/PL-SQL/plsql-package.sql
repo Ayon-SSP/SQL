@@ -70,6 +70,17 @@ CREATE OR REPLACE PACKAGE order_mgmt AS
         p_year        NUMBER
     ) RETURN NUMBER;
 
+    PROCEDURE update_order_status(
+        p_order_id NUMBER,
+        p_status   VARCHAR2
+    );
+
+    TYPE order_rec IS RECORD(
+        customer_id   orders.customer_id%TYPE,
+        status        orders.status%TYPE,
+        salesman_id   orders.salesman_id%TYPE,
+        order_date    orders.order_date%TYPE,
+    );
 END order_mgmt;
 /
 

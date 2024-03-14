@@ -10,10 +10,11 @@ Dense & Sparse Collection. – Collections is said to be dense if all the rows b
 
 PL/SQL collections:
     1. Persistent: stores the collection structure with the data physicaly in to the db
-        - Nested Tables: un-bound array
-        - Variable Sized Arrays or VARRAYs: bound array(fix amount of elements)
+        - Nested Tables: single-dimensional, unbounded collections of homogeneous elements || TYPE t_num IS TABLE OF NUMBER;
+        - Variable Sized Arrays or VARRAYs: single-dimensional, bounded collections of homogeneous elements || TYPE t_num IS VARRAY(2) OF NUMBER;
+
     2. Non-persistent: stores just for one session
-        - Associative arrays.
+        - Associative arrays: single-dimensional, unbounded, sparse collections(not sequential) of homogeneous elements. || TYPE t_num IS TABLE OF NUMBER INDEX BY NUMBER;
 
 */
 

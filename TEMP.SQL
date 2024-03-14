@@ -239,3 +239,103 @@ BEGIN
 	SELECT location INTO v_location FROM branch WHERE branchno=(SELECT branchno FROM dept WHERE deptno=v_deptno);
 	dbms_output.put_line('Branch no: 20'||', Location: '||v_location);
 END;
+
+
+/
+
+
+
+select nvl(null,10)++nvl(null,null) from dual;
+select translate('ayon(Dum) [sde]','(){}[]','()()()') from dual;
+/
+
+DECLARE
+    max_salary CONSTANT NUMBER(10,2) := 'dsf';
+BEGIN
+    DBMS_OUTPUT.put_line('Maximum Salary Allowed: ' || max_salary);
+END;
+/
+
+
+
+DECLARE
+  v_number NUMBER;
+BEGIN
+  v_number := 'abc'; -- This will raise a numeric or value error
+END;
+/
+
+-- write a code use INTO clause
+DECLARE
+  v_empno emp.empno%TYPE;
+  v_ename emp.ename%TYPE;
+  v_sal emp.sal%TYPE;
+BEGIN
+  SELECT empno, ename, sal INTO v_empno, v_ename, v_sal
+  FROM emp
+  WHERE empno = 7839;
+  DBMS_OUTPUT.put_line('Employee Number: ' || v_empno);
+  DBMS_OUTPUT.put_line('Employee Name: ' || v_ename);
+  DBMS_OUTPUT.put_line('Employee Salary: ' || v_sal);
+END;
+/
+
+
+-- CREATE A FUNCTION WITYOUT TAKING ANY arguments
+CREATE OR REPLACE FUNCTION get_date
+RETURN DATE
+IS
+  v_date DATE;
+BEGIN
+  SELECT SYSDATE INTO v_date FROM dual;
+  RETURN v_date;
+END;
+/
+
+-- USE THE AOBUVE FUNCTION
+DECLARE
+  v_date DATE;
+BEGIN
+  v_date := get_date;
+  DBMS_OUTPUT.put_line('Current Date: ' || v_date);
+END;
+/
+
+-- create a function withoiut and return value
+CREATE OR REPLACE FUNCTION my_function_name
+RETURN NUMBER
+IS
+BEGIN
+  -- Your logic here
+  NULL; -- Example logic that does nothing
+  RETURN NULL; -- Return a dummy value
+END;
+/
+
+
+declare
+Type R_REC_TYPE is Record
+    (deptno dept.deptno%type,
+    sal emp.sal%type,
+    dname dept.dname%type);
+    
+Type REF_CUR_TYPE is REF CURSOR;
+Return R_REC_TYPE;
+    
+v_rec R_REC_TYPE;
+c1 REF_CUR_TYPE;
+begin
+    open c1 for
+		select e.deptno, sum(e.sal) as sum, d.dname
+        from emp e
+        inner join dept d
+        on e.deptno = d.deptno
+        group by e.deptno, d.dname;
+    loop
+        fetch c1 into v_rec;
+        exit when c1%NOTFOUND;
+        dbms_output.put_line(v_rec.deptno|| ' ' || v_rec.sal || ' ' || v_rec.dname);
+    end loop;  
+    close c1;
+end;
+/

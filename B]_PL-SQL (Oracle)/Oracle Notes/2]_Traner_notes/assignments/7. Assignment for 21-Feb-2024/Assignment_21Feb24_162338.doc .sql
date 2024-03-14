@@ -112,11 +112,11 @@ BEGIN
     END LOOP;
     CLOSE dept_rec;
     -- Exception block for curssor
-    EXCEPTIONS
-        WHEN NO_DATA_FOUND THEN
-            DBMS_OUTPUT.put_line('No data found');
-        WHEN OTHERS THEN
-            DBMS_OUTPUT.put_line('An error occurred');
+    -- EXCEPTIONS
+    --     WHEN NO_DATA_FOUND THEN
+    --         DBMS_OUTPUT.put_line('No data found');
+    --     WHEN OTHERS THEN
+    --         DBMS_OUTPUT.put_line('An error occurred');
 END;
 /
 
@@ -695,7 +695,7 @@ DECLARE
         RETURN emp_rec_type;
 
     emp_cursor emp_ref_cursor;
-    emp_rec emp_rec_type;
+    -- emp_rec emp_rec_type;
 BEGIN
     OPEN emp_cursor FOR
         SELECT 
@@ -706,10 +706,15 @@ BEGIN
         GROUP BY branchno
         ORDER BY branchno;
     
+    -- LOOP
+    --     FETCH emp_cursor INTO emp_rec;
+    --     EXIT WHEN emp_cursor%NOTFOUND;
+    --     DBMS_OUTPUT.put_line('Department '|| emp_rec.branchno ||' Average Salary: '|| emp_rec.avg_sal );
+    -- END LOOP;
+    -- using for loop
+    FOR emp_rec IN emp_cursor
     LOOP
-        FETCH emp_cursor INTO emp_rec;
-        EXIT WHEN emp_cursor%NOTFOUND;
-        DBMS_OUTPUT.put_line('Department '|| emp_rec.branchno ||' Average Salary: '|| emp_rec.avg_sal );
+        DBMS_OUTPUT.put_line('Branch No: '|| emp_rec.branchno ||', Average Salary: '|| emp_rec.avg_sal);
     END LOOP;
     
     EXCEPTION
@@ -764,6 +769,7 @@ DECLARE
         total_sal emp.sal%TYPE
     );
     emp_cursor SYS_REFCURSOR;
+
     emp_rec emp_rec_type;
 BEGIN
     OPEN emp_cursor FOR
@@ -778,6 +784,11 @@ BEGIN
         EXIT WHEN emp_cursor%NOTFOUND;
         DBMS_OUTPUT.put_line('Department No: '|| emp_rec.deptno || ', Total Salary: ' || emp_rec.total_sal);
     END LOOP;
+    -- USE FOR LOOP
+    -- FOR emp_rec IN emp_cursor
+    -- LOOP
+    --     DBMS_OUTPUT.put_line('Department No: '|| emp_rec.deptno || ', Total Salary: ' || emp_rec.total_sal);
+    -- END LOOP;
 
     CLOSE emp_cursor;
 

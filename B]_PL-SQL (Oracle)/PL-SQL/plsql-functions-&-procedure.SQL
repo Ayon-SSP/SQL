@@ -4,7 +4,7 @@
 *     - At the schema level
 *     - Inside a package
 *     - Inside a PL/SQL block
-* 
+
 * PL/SQL sub-programs: subprogram is a standalone subprogram `program unit/module that performs a particular task` and can be deleted with the DROP PROCEDURE
 *     1. PL/SQL [Stored] Procedures − These subprograms do not return a value directly; mainly used to perform an action.
 *     2. PL/SQL Functions − These subprograms return a single value; mainly used to compute and return a value.
@@ -13,7 +13,7 @@
 *         1. Declaration Part
 *         2. Execution Part: statements that perform the designated action.
 *         3. Exception Part
-*
+
 *PL/SQL Procedures:
 *    A stored procedure in PL/SQL is nothing but a `series of declarative SQL statements which can be stored in the database catalogue`
 *
@@ -21,16 +21,15 @@
 *    1. IN Mode or Default Mode: The IN mode is the default mode. It is `used to pass values to the subprogram`.
 *    2. OUT Mode: The OUT mode is used to `output values from the subprogram to the caller`.
 *    3. IN OUT Mode: The IN OUT mode is `used to pass values to the subprogram and output values from the subprogram` to the caller.
-*
-*
+
+
 *PL/SQL Methods for Passing Parameters or Types of `Calling Notations` for Subroutines:
 *    1. Positional Notation: my_procedure(10, 1.1, 'SomeString'); -> sequence, values, parameter's
 *    2. Named Notation: my_procedure(dep_id => 10, sal_raise => 1.1, emp_name => 'SomeString');
 *    3. Mixed calling notation: my_procedure(dep_id => 10, 1.1, 'SomeString');
-*
+
 *Functions:
 *    Functions are designed to return a single value and must return.
-*    Not allow output parameters
 *    Functions can be used in `SQL queries` wherever an expression can be used.
 *    They are `invoked` by selecting them as part of an expression.
 *Procedures:
@@ -51,7 +50,7 @@ BEGIN
 EXCEPTION
     [exception handler]
 END [procedure_name];
-
+/
 SET SERVEROUTPUT ON;
 
 -- Parts of a PL/SQL Subprogram, Parameter Modes, Calling Notations
@@ -67,9 +66,12 @@ BEGIN
 
     -- Modify the `IN OUT` parameter
     p_inout_param := p_inout_param * 2;
-
+    
 END;
 /
+
+-- EXEC example_procedure;
+-- /
 
 DECLARE
     v_out_param NUMBER;
@@ -82,9 +84,68 @@ BEGIN
         p_inout_param => v_inout_param
     );
     DBMS_OUTPUT.PUT_LINE('OUT Parameter Value: ' || v_out_param);
-    DBMS_OUTPUT.PUT_LINE('IN OUT Parameter Value: ' || v_inout_param);
+    DBMS_OUTPUT.PUT_LINE('IN OUT Parameter Value: ' || v_inout_param); 
 END;
 /
+
+
+
+-- PL/SQL Functions
+CREATE OR REPLACE FUNCTION example_function (
+    p_in_default_param IN NUMBER DEFAULT 5,
+    p_in_param IN NUMBER,
+    p_out_param OUT NUMBER,
+    p_inout_param IN OUT NUMBER
+) RETURN NUMBER 
+IS 
+BEGIN
+    -- Assign a value to the `IN OUT` parameter
+    p_out_param := p_in_param * p_in_default_param;
+    p_inout_param := p_inout_param * 2;
+    RETURN 3;
+END example_function;
+/
+-- can we exec funkname
+
+DECLARE
+    v_out_param NUMBER;
+    v_inout_param NUMBER := 10;
+    v_return NUMBER;
+BEGIN
+    v_return := example_function (
+        -- p_in_default_param => 2, 
+        p_in_param => 5, 
+        p_out_param => v_out_param,
+        p_inout_param => v_inout_param
+    );
+    DBMS_OUTPUT.PUT_LINE('IN OUT Parameter Value: ' || v_out_param || ' ' || v_inout_param);
+END;
+/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 -- stored procedure
 CREATE [OR REPLACE] PROCEDURE pro_name (Parameter - List)
@@ -404,5 +465,26 @@ LOOP
         dbms_output.put_line('An error occurred!');
     END CASE;
 END LOOP;
+END;
+/
+
+
+DECLARE
+    e_credit_too_high EXCEPTION;
+    PRAGMA exception_init( e_credit_too_high, -20001 );
+    -- l_max_credit customers.credit_limit%TYPE;
+    -- l_customer_id customers.customer_id%TYPE := &customer_id;
+    -- l_credit customers.credit_limit%TYPE := &credit_limit;
+BEGIN
+    -- RAISE e_credit_too_high;
+    -- raise_application_error(-20002,'this is raise_application_error');
+    -- RAISE invalid_number;
+
+    DBMS_OUTPUT.PUT_LINE('Credit limit is too high');
+EXCEPTION
+    -- WHEN invalid_number THEN
+    --     DBMS_OUTPUT.PUT_LINE('Invalid number');
+    WHEN e_credit_too_high THEN
+        DBMS_OUTPUT.PUT_LINE('Credit limit is too high');
 END;
 /

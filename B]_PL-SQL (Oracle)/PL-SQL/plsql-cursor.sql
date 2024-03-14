@@ -278,7 +278,6 @@ DECLARE
 
 
 
-
 -- Oracle CURSOR FOR UPDATE
 DECLARE
     -- customer cursor

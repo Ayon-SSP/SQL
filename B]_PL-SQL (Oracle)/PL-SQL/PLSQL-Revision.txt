@@ -1,0 +1,184 @@
+Q. tell some non-anonymous blocks.
+Q. `/` and `edit` does.
+Q. SQL does not have the BOOLEAN data type. True
+
+1.Basics: dataTypes, var declaration, conditions, case, loops, continue.
+2. Record(rowtype) & INTO
+3. Exception handelers.
+4. Cursors
+5. Procedures, Functions & Packages.
+6. Triggers
+7. Collections
+
+
+- famous for querying and updating data.
+- overcome sql limitations.
+- PL/SQL engine can only be installed in oracle database server or ad tool Oracle Forms.
+- submit[PL/SQL] block -> Oracle DB server [plsql engine collaborates with sql engine to compile]
+
+Anonymous Block(SQL*Plus(command-line interface for executing)):
+	[Declaration] (declaretion[type, cursors])
+	{excutable block}
+	[exception]
+	- block without a name is an anonymous block (not saved in the oracle database.)(one line use)(used in testing)
+		rest other blocks like procedure, function, triggers are saved in db.
+	- you can nest exec blocks
+	- SET SERVEROUTPUT ON;  ||  DBMS_OUTPUT.put_line("hello");
+	- / will start execution. / will exec previous command.
+	- if want to edit the code use `edit` .buf file(recent runned script).
+Non-anonymous blocks like with triggers, porcedures, functions.
+
+DataType(SQL datatypes & there own datatypes): (scalar[Number, Boolean, Character, Datetime.], composite[record & collection]): 
+	BOOLEAN: datavalues True, False, Null
+	- varchar2(n) vs Char(n)
+	- '' == NULL
+
+Variables:
+	var_name datatype [NOT NULL] {[DEFAULT 'val'] [:= val]};
+	- good practice use %TYPE && %ROWTYPE while declatation.
+	- constant
+
+DECLARE
+    -- l_counter NUMBER NOT NULL DEFAULT 5 := 0; -- ERROR
+    l_counter NUMBER NOT NULL DEFAULT 5;
+    -- l_counter2 VARCHAR2(10) NOT NULL;
+    l_counter2 VARCHAR2(10) NOT NULL DEFAULT 'A';
+BEGIN
+    l_counter := 5;
+    -- l_counter2 := '';  -- a variable declared NOT NULL must have an initialization assignment
+    -- NULL; 
+END;
+/
+
+Conditions:
+-- if elsif else
+IF condition THEN
+	to_do;
+ELSIF condition THEN
+	to_do;
+	ELSE to_do;
+END IF;
+
+-- case 2types(simple case statement, searched case)
+	- PL/SQL CASE statement vs. CASE expression
+val := 
+CASE selector
+	WHEN selector_val THEN
+		to_do;
+	[WHEN selector_val THEN
+		to_do;]
+	[ELSE to_do;]
+END CASE;
+
+-- GOTO: First, you cannot use a GOTO statement to transfer control into an IF, CASE or LOOP statement, the same for the sub-block.
+
+
+GOTO label_name;
+<<label_name>>;
+
+-- NULL: '' equals to NULL
+	- null statement 'NULL;'
+	- <<end_of_programm>>
+	  NULL; --error will occur if no NULL:
+
+
+
+-- LOOPS
+<<lable>> LOOP
+	to_do;
+	EXIT WHEN condition; or EXIT;
+END LOOP lable;
+
+
+-- INTO: ERRORS are'NO_DATA_FOUND' 'TOO_MANY_ROWS'
+	- x, y, z INTO a, b -> not enough values
+	- x, y INTO a, b, c -> too many values
+	- IF datatypes are different of corresponding LHS and RHS then numeric or value error
+
+  SELECT
+    name, 
+    first_name, 
+    last_name
+  INTO
+    {l_customer_name, 
+    l_contact_first_name, 
+    l_contact_last_name /  towtype}
+  FROM
+    customers
+  INNER JOIN contacts USING( customer_id )
+  WHERE
+    customer_id = 100;
+
+-- RecordType: PL/SQL has three types of records: table-based, cursor-based, and programmer-defined.
+	user_rec_type user%ROWTPE
+	TYPE join_rec_type RECORD(
+		uid id%type,
+		uname name%type
+	);
+	user_rec user_rec_type;
+	user_rec.uid = xxx;
+	
+	select uid, uname INTO user_rec...;
+	FETCH user_rec INTO uid, uname;
+	- update:
+		update user
+		set ROW = user_rec
+		where condition;
+	- insert:
+		insert into tbl_user values user_rec;
+	- nested record
+
+
+
+
+Exception: TODO: only notes topic done.
+	- A user-defined exception must be assigned error_code(EXCEPTION_INIT)
+	- integer that ranges from -20,999 to -20,000
+	- reraise exception
+declaration:
+	- unhandled exception: Note that an unhandled exception stops the execution of the block.
+	not_found exception;
+	pragma exception_init(name, err_code);
+
+if xxx then raise not_found;
+raise_application_error(errcode, 'new exception no optional(definition))
+raise errname
+exception -- if you don't do this it will stop the program
+	when not_found then
+		dbms...
+	when other then
+		dbms SQLCODE
+
+-- collection
+TYPE t_num IS TABLE OF NUMBER;
+TYPE t_num IS VARRAY(2) OF NUMBER;
+TYPE t_num IS TABLE OF NUMBER INDEX BY NUMBER;
+
+-- functions & procedures
+create or replace procedure/funck pro_name(
+	parms
+) return number
+is/as
+	declarations
+begin
+	return number
+end;
+
+
+-- curssors:
+cursor c is
+	query;
+open c;
+fetch c into rec;
+
+close c;
+----
+type c_type is ref cursor return rowtype;
+c c_type;
+
+open c for
+	statement;
+CURSOR C IS 
+	STATEM
+	FOR UPDATE;
+

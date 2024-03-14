@@ -20,10 +20,10 @@ summerised:
 
 
 CREATE [OR REPLACE] TRIGGER trigger_name
-{BEFORE | AFTER } triggering_event ON table_name
+{BEFORE | AFTER } triggering_event ON table_name/SCHEMA/DATABASE
 [FOR EACH ROW]  -- row-level trigger
 [FOLLOWS | PRECEDES another_trigger]
-[ENABLE / DISABLE ]
+[ENABLE | DISABLE ]
 [WHEN condition]
 DECLARE
     declaration statements
@@ -33,9 +33,8 @@ EXCEPTION
     exception_handling statements
 END;
 
-
 -- (:) because OLD and NEW are external variable references.
--- triggering_event - > INSERT, UPDATE, DELETE, CREATE, ALTER, DROP, LOGON, LOGOFF, STARTUP, SHUTDOWN
+-- triggering_event - > INSERT, UPDATE, DELETE, CREATE, ALTER, DROP, LOGON, LOGOFF, STARTUP, SHUTDOWN, DDL, DML, SYSTEM, USER, COMPOUND
 
 /*
 -- USER:
@@ -45,22 +44,7 @@ END;
     - prevent invalid transactions.
 */
 
--- SYSDATE
-
 -- Oracle Statement-level Triggers
-CREATE [OR REPLACE] TRIGGER trigger_name
-    {BEFORE | AFTER } triggering_event ON table_name/SCHEMA/DATABASE
-    [FOLLOWS | PRECEDES another_trigger]
-    [ENABLE / DISABLE ]
-    [WHEN condition]
-DECLARE
-    declaration statements
-BEGIN
-    executable statements
-EXCEPTION
-    exception_handling statements
-END;
-
 -- Eg: Monday is holeday if insert on monday then error Exception
 -- For example, if you update 1000 rows in a table, then a statement-level trigger on that table would only be executed once. 
 
@@ -101,6 +85,89 @@ END;
 /
 
 INSERT INTO superheroesTABLE VALUES ('Ironman');
+
+
+
+
+
+
+
+-- 
+-- Table Auditing
+CREATE TABLE sh_audit(
+    new_name varchar2(300),
+    old_name varchar2(300),
+    user_name varchar2(300),
+    entry_date varchar2(300),
+    operation  varchar2(300)
+);
+
+CREATE OR REPLACE TRIGGER superheroes_audit
+BEFORE INSERT OR DELETE OR UPDATE ON superheroes
+FOR EACH ROW
+ENABLE
+DECLARE
+    v_user varchar2(300);
+    v_date varchar2(300);
+BEGIN
+    SELECT user, TO_CHAR(sysdate, 'DD/MON/YYYY HH24:MI:SS') INTO v_user, v_date FROM dual;
+    IF INSERTING THEN
+        INSERT INTO sh_audit (new_name, old_name, user_name, entry_date, operation) 
+        VALUES (:NEW.SH_NAME, NULL, v_user, v_date, 'Insert');
+        DBMS_OUTPUT.PUT_LINE('INSERTING');
+    ELSIF DELETING THEN
+        INSERT INTO sh_audit (new_name, old_name, user_name, entry_date, operation)
+        VALUES (NULL, :OLD.SH_NAME, v_user, v_date, 'Delete');
+        DBMS_OUTPUT.PUT_LINE('DELETING');
+    ELSIF UPDATING THEN
+        INSERT INTO sh_audit (new_name, old_name, user_name, entry_date, operation) 
+        VALUES (:NEW.SH_NAME, :OLD.SH_NAME, v_user, v_date, 'Update');
+        DBMS_OUTPUT.PUT_LINE('UPDATING');
+    END IF;
+END;
+/
+
+INSERT INTO superheroes VALUES ('Superman');
+UPDATE superheroes SET SH_NAME = 'Ironman' WHERE SH_NAME = 'Superman';
+DELETE FROM superheroes WHERE SH_NAME = 'Ironman';
+
+SELECT * FROM sh_audit;
+
+-- old and new values in DML triggers (OLD and NEW are used in row-level triggers)
+CREATE OR REPLACE TRIGGER update_last_updated
+BEFORE UPDATE OF salary ON employee_salary
+FOR EACH ROW
+REFERENCING OLD AS old_values NEW AS new_values
+WHEN (old_values.salary <> new_values.salary)
+DECLARE
+BEGIN
+    :new_values.last_updated := SYSDATE;
+END;
+/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 -- Example 2: Before Update Trigger
 CREATE OR REPLACE TRIGGER bu_Superheroes
@@ -160,45 +227,6 @@ DELETE FROM superheroes WHERE sh_name = 'Superman';
 
 
 
--- Table Auditing
-CREATE TABLE sh_audit(
-    new_name varchar2(300),
-    old_name varchar2(300),
-    user_name varchar2(300),
-    entry_date varchar2(300),
-    operation  varchar2(300)
-);
-
-CREATE OR REPLACE TRIGGER superheroes_audit
-BEFORE INSERT OR DELETE OR UPDATE ON superheroes
-FOR EACH ROW
-ENABLE
-DECLARE
-    v_user varchar2(300);
-    v_date varchar2(300);
-BEGIN
-    SELECT user, TO_CHAR(sysdate, 'DD/MON/YYYY HH24:MI:SS') INTO v_user, v_date FROM dual;
-    IF INSERTING THEN
-        INSERT INTO sh_audit (new_name, old_name, user_name, entry_date, operation) 
-        VALUES (:NEW.SH_NAME, NULL, v_user, v_date, 'Insert');
-        DBMS_OUTPUT.PUT_LINE('INSERTING');
-    ELSIF DELETING THEN
-        INSERT INTO sh_audit (new_name, old_name, user_name, entry_date, operation)
-        VALUES (NULL, :OLD.SH_NAME, v_user, v_date, 'Delete');
-        DBMS_OUTPUT.PUT_LINE('DELETING');
-    ELSIF UPDATING THEN
-        INSERT INTO sh_audit (new_name, old_name, user_name, entry_date, operation) 
-        VALUES (:NEW.SH_NAME, :OLD.SH_NAME, v_user, v_date, 'Update');
-        DBMS_OUTPUT.PUT_LINE('UPDATING');
-    END IF;
-END;
-/
-
-INSERT INTO superheroes VALUES ('Superman');
-UPDATE superheroes SET SH_NAME = 'Ironman' WHERE SH_NAME = 'Superman';
-DELETE FROM superheroes WHERE SH_NAME = 'Ironman';
-
-SELECT * FROM sh_audit;
 
 
 
@@ -421,8 +449,6 @@ END;
 
 
 
-
-
 COMMIT;
 ROLLBACK;
 
@@ -461,3 +487,7 @@ BEGIN
   END LOOP;
 END;
 /
+
+
+
+-- The "mutating table" error in Oracle typically occurs when you try to reference the same table that is currently being modified within a trigger or a statement. This can happen when you attempt to select, update, or delete from a table that is currently being modified by an INSERT, UPDATE, or DELETE statement in the same trigger or statement context.

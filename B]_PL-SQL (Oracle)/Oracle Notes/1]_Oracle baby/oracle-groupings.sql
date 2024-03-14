@@ -262,6 +262,7 @@ FROM (
 UNPIVOT (
     sales
     for monthesin in (
+        -- OR we can write a subquery hear (select months from month_table)
         Jan,
         Feb,
         Mar

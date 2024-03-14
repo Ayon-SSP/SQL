@@ -1,5 +1,4 @@
 
-
 - all the high privileged users like SYS, SYSTEM were placed inside the container databaswe and other schemas like HR, OE, SH were placed inside the pluggable database.
 - - In Oracle Database, a pluggable database (PDB) is a self-contained database unit within a larger container database (CDB)
 - 
@@ -22,4 +21,11 @@
 
 - [data dictionary objects](https://chat.openai.com/c/5b7fc911-9988-4722-9648-2329b670400e): ALL_TABLES, ALL_TAB_COLUMNS, ALL_VIEWS, ALL_INDEXES, ALL_CONS_COLUMNS, ALL_CONSTRAINTS, ALL_TAB_PRIVS, ALL_SYNONYMS, DBA_OBJECTS, DBA_USERS.
 - [plsql-exception-propagation-example-3](https://www.oracletutorial.com/wp-content/uploads/2019/08/plsql-exception-propagation-example-3.png)
-- 
+
+
+
+
+## interviewbit.com
+- tables: object of type table that are modeled as db tables
+- WHERE CURRENT: we use this clause while referencing the current row from an explicit cursor. This clause allows applying updates and deletion of the row currently under consideration without explicitly referencing the row ID.
+- EXCEPTION_INIT: assigns a name to an Oracle error so that you can reference it in your exception-handling routine.

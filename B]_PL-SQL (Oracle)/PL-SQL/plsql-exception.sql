@@ -32,7 +32,7 @@ BEGIN
     dbms_output.put_line('Customer name is ' || l_name);
 
     EXCEPTION 
-        WHEN NO_DATA_FOUND THEN
+        WHEN NO_DATA_FOUND THEN  -- internally defined exception
             dbms_output.put_line('Customer ' || l_customer_id ||  ' does not exist');
         WHEN TOO_MANY_ROWS THEN
             dbms_output.put_line('Too many customers with id ' || l_customer_id);
@@ -219,4 +219,23 @@ BEGIN
         WHEN others THEN
             dbms_output.put_line('Invalid age: ' || SQLERRM); -- SQLERRM -> 'Age cannot be negative'
 END;  -- Invalid age: ORA-20001: Age cannot be negative
+/
+
+-- use raise_application_error
+
+
+DECLARE
+    e1 EXCEPTION;
+    PRAGMA EXCEPTION_INIT(e1, -20001);
+BEGIN
+    -- raise_application_error(-20001, 'This is a custom error message');
+    DBMS_OUTPUT.PUT_LINE('__-----------------------___________');
+    EXCEPTIONS
+        BEGIN
+            WHEN e1 THEN
+                DBMS_OUTPUT.PUT_LINE('An error occurred: ');
+        END;
+        WHEN OTHERS THEN
+            DBMS_OUTPUT.PUT_LINE('An error occurred: ' || SQLERRM);
+END;
 /

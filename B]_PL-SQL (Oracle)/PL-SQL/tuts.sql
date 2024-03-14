@@ -726,13 +726,158 @@ BEGIN
     END LOOP inner_loop;
   END LOOP outer_loop;
 END;
+/
 
 
 
 
+/ - 
+edit -
+
+/
+DECLARE
+    -- l_counter NUMBER NOT NULL DEFAULT 5 := 0; -- ERROR
+    l_counter NUMBER NOT NULL DEFAULT 5;
+    -- l_counter2 VARCHAR2(10) NOT NULL;
+    l_counter2 VARCHAR2(10) NOT NULL DEFAULT 'A';
+    l_counter2 CONSTANT VARCHAR2(10) NOT NULL DEFAULT 'A';
+    -- l_const CONSTANT NUMBER; -- error
+    l_const CONSTANT NUMBER := 3.141592654;
+BEGIN
+    l_counter := 5;
+    -- l_const := 3.141592654; -- error
+    -- l_counter2 := '';  -- a variable declared NOT NULL must have an initialization assignment
+    -- NULL; 
+END;
+/
+
+
+DECLARE
+    v_score NUMBER := 85;
+    v_grade VARCHAR2(2);
+BEGIN
+    CASE
+        WHEN v_score >= 90 THEN
+            v_grade := 'A';
+        WHEN v_score >= 80 THEN
+            v_grade := 'B';
+        WHEN v_score >= 70 THEN
+            v_grade := 'C';
+        WHEN v_score >= 60 THEN
+            v_grade := 'D';
+        ELSE
+            v_grade := 'F';
+    END CASE;
+
+    DBMS_OUTPUT.PUT_LINE('The grade for score ' || v_score || ' is ' || v_grade);
+END;
+/
+
+DECLARE
+    v_day VARCHAR2(10) := 'Monday';
+    v_message VARCHAR2(50);
+BEGIN
+    v_message := 
+        CASE v_day
+            WHEN 'Monday' THEN 'It is the start of the week.'
+            WHEN 'Tuesday' THEN 'It is the second day of the week.'
+            WHEN 'Wednesday' THEN 'It is the middle of the week.'
+            WHEN 'Thursday' THEN 'It is almost Friday.'
+            WHEN 'Friday' THEN 'It is finally Friday!'
+            WHEN 'Saturday' THEN 'It is the weekend.'
+            WHEN 'Sunday' THEN 'It is the end of the week.'
+            ELSE 'Invalid day.'
+        END;
+    
+    DBMS_OUTPUT.PUT_LINE(v_message);
+END;
+/
+
+BEGIN
+    GOTO second_message;
+
+    <<first_message>>
+    DBMS_OUTPUT.PUT_LINE( 'Hello' );
+    GOTO the_end; -- end less if comment this line PGA_AGGREGATE_LIMIT
+
+    <<second_message>>
+    DBMS_OUTPUT.PUT_LINE( 'PL/SQL GOTO Demo' );
+    GOTO first_message;
+
+    <<the_end>>
+    DBMS_OUTPUT.PUT_LINE( 'and good bye...' );
+
+END;
+/
+
+DECLARE
+    n_sales      NUMBER;
+    n_commission NUMBER;
+BEGIN
+    n_sales := 120000;
+    IF n_sales      > 100000 THEN
+        n_commission := 0.2;
+        GOTO zero_commission;
+    elsif n_sales   > 50000 THEN
+        n_commission := 0.15;
+    elsif n_sales   > 20000 THEN
+        n_commission := 0.1;
+    ELSE
+        <<zero_commission>>
+        n_commission := 0;
+    END IF;
+END;
+
+/
 
 
 
+
+DECLARE
+   a number(2) ;
+BEGIN
+   FOR a IN REVERSE 10 .. 20 
+   LOOP
+    null;
+   END LOOP;
+dbms_output.put_line('SLDKJ---------' || a);
+END;
+/
+
+
+DECLARE
+   a number(2) ;
+BEGIN
+   FOR a IN REVERSE 10 .. 20 LOOP
+    DBMS_OUTPUT.PUT_LINE(a);
+   END LOOP;
+dbms_output.put_line('SLDKJ---------:' || a);
+END;
+/
+
+
+
+DECLARE
+   a number;
+   b number;
+   c number;
+
+PROCEDURE findMin(x IN number, y IN number, z OUT number) IS
+BEGIN
+   IF x < y THEN
+      z:= x;
+   ELSE
+      z:= y;
+   END IF;
+END; 
+
+BEGIN
+   a:= 2;
+   b:= 5;
+   findMin(a, b, c);
+   dbms_output.put_line(c);
+END;
+/
 
 
 

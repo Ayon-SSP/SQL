@@ -12,7 +12,7 @@
   -- Anti join:
   -- Equi join:
   -- Non-equi join:
-  -- Semi join:
+  -- Semi join: A semi-join in Oracle is a type of join that returns rows from the first table where a matching row exists in the second table
 
 
 

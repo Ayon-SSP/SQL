@@ -57,7 +57,7 @@ CUME_DIST() OVER (
 
 select * from emp;
 
-select empno, ename, sal, 
+select empno, ename, sal,   
     CUME_DIST() OVER (ORDER BY sal) as cume_dist
 from emp;
 

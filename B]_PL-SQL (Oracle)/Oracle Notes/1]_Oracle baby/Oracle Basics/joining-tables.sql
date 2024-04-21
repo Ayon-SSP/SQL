@@ -5,14 +5,13 @@
   -- FULL OUTER JOIN – describe how to use the full outer join or full join to query data from two tables.
   -- CROSS JOIN – cover how to make a Cartesian product from multiple tables.
 -- Join concepts
-  -- Self-join – show you how to join a table to itself to query hierarchical data or compare rows within the same table.
-  -- Natural join:
+  -- Natural join: - auto select common column
   -- CROSS JOIN:
-  -- SELF JOIN:
-  -- Anti join:
+  -- SELF JOIN: – show you how to join a table to itself to query hierarchical data or compare rows within the same table.
+  -- Anti join: - same as above but does not exist
   -- Equi join:
   -- Non-equi join:
-  -- Semi join: A semi-join in Oracle is a type of join that returns rows from the first table where a matching row exists in the second table
+  -- Semi join: A semi-join in Oracle is a type of join that returns rows from the first table where a matching row `exists` in the second table
 
 
 

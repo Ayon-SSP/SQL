@@ -2,7 +2,7 @@ Q. tell some non-anonymous blocks.
 Q. `/` and `edit` does.
 Q. SQL does not have the BOOLEAN data type. True
 
-1.Basics: dataTypes, var declaration, conditions, case, loops, continue.
+1. Basics: dataTypes, var declaration, conditions, case, loops, continue.
 2. Record(rowtype) & INTO
 3. Exception handelers.
 4. Cursors
@@ -111,7 +111,7 @@ END LOOP lable;
 
 -- RecordType: PL/SQL has three types of records: table-based, cursor-based, and programmer-defined.
 	user_rec_type user%ROWTPE
-	TYPE join_rec_type RECORD(
+	TYPE join_rec_type RECORD (
 		uid id%type,
 		uname name%type
 	);
@@ -181,4 +181,3 @@ open c for
 CURSOR C IS 
 	STATEM
 	FOR UPDATE;
-

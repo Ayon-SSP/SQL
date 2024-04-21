@@ -26,3 +26,13 @@ ON members(last_name);
 
 SELECT * FROM members
 WHERE last_name = 'Harse';
+
+CREATE UNIQUE INDEX index_name ON 
+table_name(column1[,column2,...]);
+
+DROP INDEX [schema_name.]index_name;
+
+-- https://www.oracletutorial.com/oracle-index/
+- effective tools for boost the query performance. 
+However, in order to use it effectively, you must understand it correctly. This section helps you understand and use Oracle indexes to speed up your queries.
+

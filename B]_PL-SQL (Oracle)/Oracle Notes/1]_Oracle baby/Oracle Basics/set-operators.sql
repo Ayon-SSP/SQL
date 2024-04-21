@@ -1,3 +1,11 @@
+-- data types should be same
+-- UNION - removes duplicates
+-- UNION ALL - does not remove duplicates
+-- INTERSECT - returns common rows
+-- MINUS - returns rows from first query that are not in second query
+
+
+
 -- Creating sample tables
 CREATE TABLE table1 (
     id NUMBER,

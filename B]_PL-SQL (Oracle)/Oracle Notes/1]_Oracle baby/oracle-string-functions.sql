@@ -34,7 +34,8 @@ SUBSTR( 'ABCDEF', 2, 3 )  -> BCD
 -- TRIM: Removes all specified characters from the beginning and end of a string.
 TRIM( 'ABC', 'A' )  -> BC
 -- LTRIM: Removes all occurrences of a specified set of characters from the left end of a string.
-LTRIM( 'ABC', 'A' )  -> BC
+LTRIM(' ABC ')  -> 'ABC '
+RTRIM(' ABC ')  -> ' ABC'
 -- REGEXP_COUNT: Returns the number of times a pattern occurs in a string.
 REGEXP_COUNT( 'This is a playlist', 'is' )  -> 2
 -- REGEXP_INSTR: Returns the position of the first occurrence of a regular expression in a string.
@@ -46,6 +47,9 @@ REGEXP_SUBSTR( 'This is a playlist', 'is' )  -> is
 -- ...THERE ARE MANY READ FORM DOCS: https://www.oracletutorial.com/oracle-string-functions/
 REPLACE( 'This is a test', 'is', 'IS' ) -> ThIS IS a test
 
+TRANSLATE("12345", "143", "bx") | 1 -> b, 4 -> x, 3 -> ''; | -> 'b2x5'
+
+REPLACE('JACK AND JOND','J','BL'); -> BLACK AND BLOND
 
 -- LISTAGG: Concatenates the values of a column into a single string.
 -- LISTAGG(expression [ WITHIN GROUP ( ORDER BY expression [, expression] ... ) [, DISTINCT ] [ , delimiter ] )

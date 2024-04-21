@@ -76,7 +76,7 @@ select job, sum(sal) from EMP group by grouping sets((job));
 
 SELECT Region, Product, SUM(Sales) AS TotalSales
 FROM sales
-GROUP BY ROLLUP((Region, Product),(Region),(Product),());
+GROUP BY ROLLUP((Region, Product));
 
 | Region  | Product | TotalSales |
 |---------|---------|------------|
@@ -241,6 +241,11 @@ PIVOT (
         'March' AS Mar_Sales
     )
 );
+-- output
+-- | EMPLOYEE | JAN_SALES | FEB_SALES | MAR_SALES |
+-- |----------|-----------|-----------|-----------|
+-- | John     | 101       | 155       | 200       |
+-- | Alice    | 120       | 180       | 220       |
 
 
 SELECT *
@@ -286,39 +291,6 @@ PIVOT(
     )
 )
 ORDER BY status;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 -- UNPIVOT – a guide to rotating columns into rows.

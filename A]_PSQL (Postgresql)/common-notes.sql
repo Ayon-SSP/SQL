@@ -22,6 +22,9 @@ add column new_col_name data_tupe;
 -<or>- alter column column_name new_datatype;
 -<or>- rename column old_name to new_colname;
 
+alter table table_name
+add/drop/enable/disable constraint constraint_name
+...
 -- default
 ALTER TABLE table_name
 ALTER COLUMN column_name SET DEFAULT new_default_value;

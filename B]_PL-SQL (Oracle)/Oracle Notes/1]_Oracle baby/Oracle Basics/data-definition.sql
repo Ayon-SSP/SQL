@@ -16,7 +16,7 @@ FROM existing_table_name
 WHERE condition;
 
 -- Global Temp Tables
-CREATE GLOBAL TEMPORARY TABLE temp_table_name
+CREATE GLOBAL/PRIVATE TEMPORARY TABLE temp_table_name
 (column1 datatype, column2 datatype, ...);
 
 -- Local Temp Tables

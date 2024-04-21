@@ -39,9 +39,6 @@ or self-joins.
 
 
 
-
-
-
 -- CUME_DIST 0 < ret<= 1
 -- CUME_DIST() - non parameters funk
 -- CUME_DIST() = (R) / N
@@ -101,7 +98,7 @@ FROM emp;
 
 -- LAG: return the value of the previous row
 
--- NTILE: divide the rows in a group into n buckets
+-- NTILE: divide the rows in a group into n buckets: https://www.oracletutorial.com/oracle-analytic-functions/oracle-ntile/
 SELECT ename, sal, dept,
     NTILE(4) OVER (PARTITION BY dept ORDER BY sal) as quartile
 FROM emp;
@@ -200,14 +197,6 @@ Bob          | 85    | 85              | 87.5
 Charlie      | 80    | 85              | 82.5
 David        | 85    | 85              | 82.5
 */
-
-
-
-
-
-
-
-
 
 
 

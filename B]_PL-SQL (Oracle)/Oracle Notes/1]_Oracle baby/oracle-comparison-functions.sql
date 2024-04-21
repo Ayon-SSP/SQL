@@ -64,7 +64,7 @@ FROM dual;
 SELECT NULLIF(100,100) -- null
 FROM dual;
 
-SELECT NULLIF(100,200) -- null
+SELECT NULLIF(100,200) -- 0
 FROM dual;
 
 -- decode(a, b, c): if a = b then c else a

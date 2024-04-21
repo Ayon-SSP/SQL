@@ -1,3 +1,38 @@
+/*
+Character Data Types:
+    CHAR(n): Fixed-length character string with a maximum length of n characters.
+    VARCHAR2(n): Variable-length character string with a maximum length of n characters.
+    NCHAR(n): Fixed-length Unicode character string with a maximum length of n characters.
+    NVARCHAR2(n): Variable-length Unicode character string with a maximum length of n characters.
+    CLOB: Character large object for storing large amounts of character data.
+
+Numeric Data Types:
+    NUMBER(precision, scale): Fixed-point or floating-point number with specified precision and scale.
+    INTEGER: Whole numbers within the range of -2,147,483,648 to 2,147,483,647.
+    FLOAT: Floating-point number with binary precision p.
+    DOUBLE PRECISION: Double-precision floating-point number.
+
+Date and Time Data Types:
+    DATE: Date and time data in the format 'YYYY-MM-DD HH:MI:SS'.
+    TIMESTAMP: Date and time data with fractional seconds precision.
+    INTERVAL: Represents a period of time.
+
+Binary Data Types:
+    BLOB: Binary large object for storing large amounts of binary data.
+    RAW(n): Fixed-length binary data with a maximum length of n bytes.
+    LONG RAW: Variable-length binary data.
+
+Large Object Data Types:
+    BFILE: Binary file data stored outside the database.
+    NCLOB: Unicode character large object.
+
+Row Identifier Data Types:
+    ROWID: Binary representation of a row's address.
+    UROWID: Universal row identifier, encoded as base 64.
+
+*/
+
+
 -- CHAR(size)
 /*
 * DEFAULT 1
@@ -5,8 +40,6 @@
 * IF YOU INSERT LESS THAN THE SIZE IT WILL BE FILLED WITH SPACE
 * CHARACTERS RANGE FROM 1 TO 2000 bytes
 */
-
-
 
 
 CREATE TABLE Temp_1 (col1 CHAR(5));
@@ -79,7 +112,7 @@ INSERT INTO Temp_number_demo
 VALUES(-9999.99);
 
 INSERT INTO Temp_number_demo
-VALUES(9999.999);
+VALUES(9999.999); -- ERROR
 
 SELECT * FROM Temp_number_demo;
 
@@ -101,3 +134,19 @@ INSERT INTO Temp_number_demo VALUES (976314.478);
 SELECT * FROM Temp_number_demo;
 
 -- DATEDIFF()
+
+
+-- THIS IS VERY CONFUSION
+CREATE TABLE number_demo ( 
+    number_value NUMERIC(6, 2) 
+);
+
+
+INSERT INTO number_demo
+VALUES(100.99);
+
+INSERT INTO number_demo
+VALUES(90.551);
+
+INSERT INTO number_demo
+VALUES(8.556014527);

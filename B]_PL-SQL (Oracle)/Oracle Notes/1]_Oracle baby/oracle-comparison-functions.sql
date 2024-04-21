@@ -93,8 +93,6 @@ SELECT customer_id,
 FROM customers;
 
 
-
-
 DECLARE
   my_constant CONSTANT NUMBER := NULL;
 BEGIN
@@ -102,17 +100,3 @@ BEGIN
 --   my_constant := 10;
     DBMS_OUTPUT.PUT_LINE('The value of my_constant is ' || my_constant);
 END;
-
-
-
-select 1234 from dual
-UNION ALL
-select 1234 from dual
-union
-select 1234 from dual
-union
-select 1234 from dual
-INTERSECT
-select 1234 from dual
-union
-select 1234 from dual;

@@ -1,12 +1,11 @@
 /*
-
 * refere gaurav's notes romee
-* view's are also called as virtual tables 
+* view's are also called as virtual tables.
 *     (Virtual/logical table) or 
 *     (database object) 
 *     (virtual entity) 
 *     (no space is taken, extract data from table) 
-*     (slow results because it renders the info from the exst table)
+*     (slow results because it renders the info from the exst table) 
 *     dependent logical object
 *     may or may not allow DML
 * only the definition of a view is stored in the data dictionary, it doew not actually exist as a separate tables

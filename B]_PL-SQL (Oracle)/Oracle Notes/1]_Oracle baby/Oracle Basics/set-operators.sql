@@ -88,3 +88,16 @@ ID   NAME
 1    John
 2    Alice
 */
+
+
+select 1234 from dual
+UNION ALL
+select 1234 from dual
+union
+select 1234 from dual
+union
+select 1234 from dual
+INTERSECT
+select 1234 from dual
+union
+select 1234 from dual;

@@ -45,7 +45,7 @@ DECLARE
     l_counter2 VARCHAR2(10) NOT NULL DEFAULT 'A';
 BEGIN
     l_counter := 5;
-    -- l_counter2 := '';  -- a variable declared NOT NULL must have an initialization assignment
+    -- l_counter2 := '';  -- a variable declared NOT NULL must have an initialization assignment(v_variable VARCHAR2(50) NOT NULL := 'Initial Value';)
     -- NULL; 
 END;
 /

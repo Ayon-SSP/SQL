@@ -130,7 +130,7 @@ SELECT * FROM pg_catalog.pg_tables; - list all tables
 CREATE TABLE IF NOT EXISTS employee (
     name VARCHAR (255) NOT NULL,
     empid int not null
-);
+); -- `IF NOT EXISTS` not supported in Oracle SQL.
 
 
 CREATE TABLE IF NOT EXISTS employeeTemp (
@@ -757,17 +757,12 @@ select sc1,sc2,sc3
 from (select c1 as sc1, c2 as sc2, c3*3 as sc3 from tb1) as tb2
 where sc1 >1;
 
-<<<<<<< HEAD
-insert into tb2 (select * from tbq);
-=======
 
 
 insert into tb2 (select * from tbq);
 
 
 GRANT ALL PRIVILEGES ON DATABASE your_database TO new_username;
->>>>>>> 88d2ff3c389da92908c93b7cd345659a740f65da
-
 
 
 

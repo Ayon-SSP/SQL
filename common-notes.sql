@@ -2,9 +2,7 @@ create table table_name(
 	colname data_type constrent;
 )
 
--- insertion order is maintained
-insert into table_name (col1, col2, col3);
-
+Constraint: 
 1. NOT NULL
 2. UNIQUE
 3. PRIMARY KEY
@@ -12,6 +10,12 @@ insert into table_name (col1, col2, col3);
 5. CHECK
 6. DEFAULT
 7. CREATE INDEX
+
+
+-- insertion order is maintained
+insert into table_name (col1, col2, col3);
+
+
 
 
 -- column
